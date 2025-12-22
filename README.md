@@ -98,3 +98,6 @@ Hotwire (Turbo Frames/Streams) を使用し、一覧画面や詳細画面でス�
 
 ## URL 仮
 * サービスURL: https://rbv-app.onrender.com
+
+## 画面遷移図
+Figma: https://www.figma.com/design/3aJfMezsa1lYJd2sUQKTPX/rbv_transition-diagram?node-id=0-1&t=Sc1jmHpSbKMeOmA7-1
