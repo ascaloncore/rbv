@@ -16,7 +16,8 @@ https://www.figma.com/design/3aJfMezsa1lYJd2sUQKTPX/rbv_transition-diagram?node-
 ### READMEに記載した機能
 - [x] ユーザー登録機能（新規登録画面）
 - [x] ログイン機能（top-page:LP上に配置）
-- [x] パスワード変更機能 (PWリセット画面)
+- [x] パスワード変更機能 (※ログイン後の変更画面にて対応)
+- [ ] パスワードリセット機能 (※メール経由の再発行はMVP後)
 - [ ] メールアドレス変更機能
 - [x] 記事投稿機能（在庫(教材)登録画面）
 - [x] 記事閲覧機能（在庫(教材)一覧画面・在庫(教材)詳細閲覧画面）
@@ -32,7 +33,7 @@ https://www.figma.com/design/3aJfMezsa1lYJd2sUQKTPX/rbv_transition-diagram?node-
 - [ ] いいね機能
 - [ ] いいね解除機能
 - [x] ダッシュボードにおけるステータス管理
-- [x] 管理者用画面機能
+- [ ] 管理者用画面機能
 - [x] 決算処理：減損損失処理機能
 
 ### 未ログインでも閲覧または利用できるページ
@@ -44,4 +45,4 @@ https://www.figma.com/design/3aJfMezsa1lYJd2sUQKTPX/rbv_transition-diagram?node-
 ### メールアドレス・パスワード変更確認項目
 直接変更できるものではなく、一旦メールなどを介して専用のページで変更する画面遷移になっているか？
 - [ ] メールアドレス
-- [x] パスワード（申請 → メール受信 → 変更画面 の遷移を作成済み）
+- [x] パスワード（※ログイン後の変更画面にて対応）
