@@ -4,32 +4,40 @@
 
 #### users テーブル
 - id : ユーザーID (PK)
+- email : メールアドレス / ユニーク制約 (UK)
+- crypted_password : パスワード（暗号化）
+- salt : パスワードソルト
 - name : ユーザー名
-- email : メールアドレス / ユニーク制約
-- crypted_password : 暗号化されたパスワード
-- salt : パスワードのソルト（Sorcery認証用）
+- created_at : 作成日時
+- updated_at : 更新日時
 
 #### categories テーブル
 - id : カテゴリID (PK)
-- name : カテゴリ名称（例：書籍、動画など）
+- name : カテゴリ名称
+- created_at : 作成日時
+- updated_at : 更新日時
 
 #### stocks テーブル
 - id : 在庫ID (PK)
-- user_id : ユーザーID (FK / users参照)
-- category_id : カテゴリID (FK / categories参照)
+- user_id : ユーザーID (FK)
+- category_id : カテゴリID (FK)
 - title : 在庫タイトル
-- purchase_price : 取得価額（コスト）
-- book_value : 帳簿価額（評価減後の価値）
-- fair_value : 公正価値（減損後の価値）
-- status : 在庫状態（Enum管理：未着手、仕掛中、完了、減損など）
-- author : 著者・製作者
+- purchase_price : 取得価額
+- book_value : 帳簿価額（評価減後）
+- fair_value : 公正価値（減損後）
+- status : ステータス
+- author : 在庫著者
 - purchase_date : 購入日
+- created_at : 登録日時
+- updated_at : 更新日時
 
 #### memos テーブル
 - id : 学習メモID (PK)
-- user_id : ユーザーID (FK / users参照)
-- stock_id : 在庫ID (FK / stocks参照)
-- body : 学習メモの内容
+- user_id : ユーザーID (FK)
+- stock_id : 在庫ID (FK)
+- body : 学習メモ内容
+- created_at : 作成日時
+- updated_at : 更新日時
 
 ### ER図
 ```mermaid
