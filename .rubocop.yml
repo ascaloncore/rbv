@@ -1,0 +1,50 @@
+# Omakase Ruby styling for Rails
+inherit_gem:
+  rubocop-rails: config/default.yml
+
+plugins:
+  - rubocop-performance
+  - rubocop-rails
+
+AllCops:
+  # 除外するファイル（自動生成ファイルなど）
+  Exclude:
+    - 'vendor/**/*'
+    - 'db/schema.rb'
+    - 'bin/**/*'
+    - 'node_modules/**/*'
+    - 'tmp/**/*'
+    - 'public/**/*'
+  # 日本語のコメントを許可する
+  SuggestExtensions: false
+  NewCops: enable
+
+# ドキュメントのコメントを強制しない
+Style/Documentation:
+  Enabled: false
+
+# 文字列のダブルクォート/シングルクォートを気にしない
+Style/StringLiterals:
+  Enabled: false
+
+# 行の長さを緩和（デフォルトは80文字ですぐ警告が出る）
+Layout/LineLength:
+  Max: 160
+
+# メソッドの行数制限を緩和
+Metrics/MethodLength:
+  Max: 20
+
+# クラスの行数制限を緩和
+Metrics/ClassLength:
+  Max: 200
+
+# 日本語のコメントを許可する（ASCII文字以外を許可）
+Style/AsciiComments:
+  Enabled: false
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
