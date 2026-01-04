@@ -8,3 +8,15 @@
  *
  * Consider organizing styles into separate files for maintainability.
  */
+
+/*
+ * Tailwind CSS base styles (compiled from app/assets/tailwind/application.css)
+ * Note: tailwindcss-rails compiles this to app/assets/builds/tailwind.css
+ * The compiled file is automatically included by tailwindcss-rails
+ */
+
+/*
+ * daisyUI component styles
+ * Loaded after Tailwind to allow component overrides
+ */
+@import "daisyui.css";
