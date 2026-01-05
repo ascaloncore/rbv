@@ -1,0 +1,6 @@
+# Japanese locale file for RBV application
+# rails-i18n gem provides basic Japanese translations for Rails core
+# Add application-specific translations below
+
+ja:
+  hello: "こんにちは、世界"
