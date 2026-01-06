@@ -10,13 +10,13 @@ class UsersController < ApplicationController
     if @user.save
       redirect_to root_path, notice: "ユーザー登録が完了しました。"
     else
-      render :new, status: :unprocessable_entity
+      render :new, status: :unprocessable_content
     end
   end
 
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :name)
+    params.expect(user: %i[email password password_confirmation name])
   end
 end
