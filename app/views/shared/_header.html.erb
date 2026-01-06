@@ -8,7 +8,10 @@
     <ul class="menu menu-horizontal px-1">
       <% if logged_in? %>
         <li>
-          <%= link_to "在庫登録", "#", class: "btn btn-ghost" %>
+          <%= link_to "在庫一覧", stocks_path, class: "btn btn-ghost" %>
+        </li>
+        <li>
+          <%= link_to "在庫登録", new_stock_path, class: "btn btn-ghost" %>
         </li>
         <li>
           <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "btn btn-ghost" %>

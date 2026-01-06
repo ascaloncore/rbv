@@ -4,3 +4,20 @@
 
 ja:
   hello: "こんにちは、世界"
+  activerecord:
+    models:
+      stock: "在庫"
+    attributes:
+      stock:
+        title: "タイトル"
+        purchase_price: "購入金額"
+        acquired_on: "取得日"
+        status: "ステータス"
+        impression: "感想"
+        category_id: "カテゴリ"
+    enums:
+      stock:
+        status:
+          unstarted: "未着手"
+          in_progress: "学習中"
+          completed: "完了"
