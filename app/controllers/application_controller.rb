@@ -15,4 +15,12 @@ class ApplicationController < ActionController::Base
 
   # Custom flash types
   add_flash_types :success, :info, :warning, :danger
+
+  private
+
+  def require_login
+    return if logged_in?
+
+    redirect_to login_path, alert: "ログインが必要です"
+  end
 end

@@ -4,3 +4,23 @@
 
 ja:
   hello: "こんにちは、世界"
+  activerecord:
+    models:
+      stock: "在庫"
+    attributes:
+      stock:
+        title: "タイトル"
+        purchase_price: "購入金額"
+        purchase_date: "購入日"
+        status: "ステータス"
+        impression: "感想"
+        category_id: "カテゴリ"
+    enums:
+      stock:
+        status:
+          unread: "未読 (適正在庫)"
+          reading: "読書中 (適正在庫)"
+          stagnant: "停滞中 (滞留在庫)"
+          suspended: "中断中 (不良在庫)"
+          impaired: "減損損失 (読書撤退損)"
+          completed: "読書完了 (知識資産)"
