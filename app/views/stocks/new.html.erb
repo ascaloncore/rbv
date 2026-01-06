@@ -40,10 +40,10 @@
     </div>
 
     <div class="form-control">
-      <%= f.label :acquired_on, class: "label" do %>
-        <span class="label-text">取得日</span>
+      <%= f.label :purchase_date, class: "label" do %>
+        <span class="label-text">購入日</span>
       <% end %>
-      <%= f.date_field :acquired_on, class: "input input-bordered w-full" %>
+      <%= f.date_field :purchase_date, class: "input input-bordered w-full" %>
     </div>
 
     <div class="form-control">
@@ -51,10 +51,13 @@
         <span class="label-text">ステータス</span>
       <% end %>
       <%= f.select :status, options_for_select([
-        ["未着手", "unstarted"],
-        ["学習中", "in_progress"],
-        ["完了", "completed"]
-      ], @stock.status), {}, { class: "select select-bordered w-full" } %>
+        ["未読 (適正在庫)", "unread"],
+        ["読書中 (適正在庫)", "reading"],
+        ["停滞中 (滞留在庫)", "stagnant"],
+        ["中断中 (不良在庫)", "suspended"],
+        ["減損損失 (読書撤退損)", "impaired"],
+        ["読書完了 (知識資産)", "completed"]
+      ], @stock.status || "unread"), {}, { class: "select select-bordered w-full" } %>
     </div>
 
     <div class="form-control">

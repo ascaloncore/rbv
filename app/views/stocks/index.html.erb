@@ -21,10 +21,10 @@
                   <span><%= number_to_currency(stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %></span>
                 </p>
               <% end %>
-              <% if stock.acquired_on %>
+              <% if stock.purchase_date %>
                 <p>
-                  <span class="font-semibold">取得日:</span>
-                  <span><%= stock.acquired_on.strftime("%Y年%m月%d日") %></span>
+                  <span class="font-semibold">購入日:</span>
+                  <span><%= stock.purchase_date.strftime("%Y年%m月%d日") %></span>
                 </p>
               <% end %>
               <p>
