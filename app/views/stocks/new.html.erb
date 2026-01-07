@@ -34,9 +34,9 @@
 
     <div class="form-control">
       <%= f.label :purchase_price, class: "label" do %>
-        <span class="label-text">購入金額（円）</span>
+        <span class="label-text">購入金額（円） <span class="text-error">*</span></span>
       <% end %>
-      <%= f.number_field :purchase_price, class: "input input-bordered w-full", placeholder: "0", min: 0, step: 1 %>
+      <%= f.number_field :purchase_price, class: "input input-bordered w-full", placeholder: "0", min: 0, step: 1, required: true %>
     </div>
 
     <div class="form-control">
@@ -50,14 +50,10 @@
       <%= f.label :status, class: "label" do %>
         <span class="label-text">ステータス</span>
       <% end %>
-      <%= f.select :status, options_for_select([
-        ["未読 (適正在庫)", "unread"],
-        ["読書中 (適正在庫)", "reading"],
-        ["停滞中 (滞留在庫)", "stagnant"],
-        ["中断中 (不良在庫)", "suspended"],
-        ["減損損失 (読書撤退損)", "impaired"],
-        ["読書完了 (知識資産)", "completed"]
-      ], @stock.status || "unread"), {}, { class: "select select-bordered w-full" } %>
+      <%= f.select :status, options_for_select(
+        Stock.statuses.keys.map { |key| [I18n.t("activerecord.enums.stock.status.#{key}"), key] },
+        @stock.status || "unread"
+      ), {}, { class: "select select-bordered w-full" } %>
     </div>
 
     <div class="form-control">

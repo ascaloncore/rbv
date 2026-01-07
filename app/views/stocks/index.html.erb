@@ -36,8 +36,9 @@
               <% end %>
             </div>
             <div class="card-actions justify-end mt-4">
-              <%= link_to "編集", edit_stock_path(stock), class: "btn btn-sm btn-outline" %>
-              <%= link_to "削除", stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-error" %>
+              <%# Issue #18で編集・削除機能を実装予定のため、一時的にコメントアウト %>
+              <%# <%= link_to "編集", edit_stock_path(stock), class: "btn btn-sm btn-outline" %> %>
+              <%# <%= link_to "削除", stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "削除してもよろしいですか？" }, class: "btn btn-sm btn-error" %> %>
             </div>
           </div>
         </div>
