@@ -2,7 +2,7 @@
 
 class StocksController < ApplicationController
   before_action :require_login
-  before_action :set_stock, only: %i[edit update destroy]
+  before_action :set_stock, only: %i[show edit update destroy]
 
   def index
     @stocks = current_user.stocks.includes(:category).order(
@@ -13,6 +13,9 @@ class StocksController < ApplicationController
   def new
     @stock = current_user.stocks.build
     @categories = Category.all
+  end
+
+  def show
   end
 
   def edit

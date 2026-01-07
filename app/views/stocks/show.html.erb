@@ -1,0 +1,66 @@
+<div class="max-w-4xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <h1 class="text-3xl font-bold">在庫詳細</h1>
+    <div class="flex gap-2">
+      <%= link_to "編集", edit_stock_path(@stock), class: "btn btn-primary" %>
+      <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-error" %>
+      <%= link_to "一覧に戻る", stocks_path, class: "btn btn-outline" %>
+    </div>
+  </div>
+
+  <div class="card bg-base-100 shadow-xl">
+    <div class="card-body">
+      <div class="space-y-6">
+        <div>
+          <h2 class="text-2xl font-bold mb-2"><%= @stock.title %></h2>
+          <div class="flex gap-2 mt-2">
+            <span class="badge badge-outline"><%= @stock.category.name %></span>
+            <span class="badge <%= status_badge_class(@stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{@stock.status}") %></span>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h3 class="font-semibold text-lg mb-2">購入金額</h3>
+            <p class="text-xl">
+              <% if @stock.purchase_price %>
+                <%= number_to_currency(@stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %>
+              <% else %>
+                <span class="text-gray-500">未設定</span>
+              <% end %>
+            </p>
+          </div>
+
+          <div>
+            <h3 class="font-semibold text-lg mb-2">購入日</h3>
+            <p class="text-xl">
+              <% if @stock.purchase_date %>
+                <%= @stock.purchase_date.strftime("%Y年%m月%d日") %>
+              <% else %>
+                <span class="text-gray-500">未設定</span>
+              <% end %>
+            </p>
+          </div>
+        </div>
+
+        <% if @stock.impression.present? %>
+          <div>
+            <h3 class="font-semibold text-lg mb-2">感想・メモ</h3>
+            <p class="whitespace-pre-wrap"><%= @stock.impression %></p>
+          </div>
+        <% end %>
+
+        <div class="divider"></div>
+
+        <div class="text-sm text-gray-500">
+          <p>登録日: <%= @stock.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+          <% if @stock.updated_at != @stock.created_at %>
+            <p>更新日: <%= @stock.updated_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
