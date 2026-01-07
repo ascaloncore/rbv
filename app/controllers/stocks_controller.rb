@@ -32,16 +32,17 @@ class StocksController < ApplicationController
 
   def update
     if @stock.update(stock_params)
-      redirect_to stocks_path, success: I18n.t("controllers.stocks.updated")
+      redirect_to stock_path(@stock), success: I18n.t("controllers.stocks.updated")
     else
       @categories = Category.all
+      flash.now[:danger] = I18n.t("controllers.stocks.update_failed")
       render :edit, status: :unprocessable_content
     end
   end
 
   def destroy
     @stock.destroy
-    redirect_to stocks_path, notice: I18n.t("controllers.stocks.destroyed"), status: :see_other
+    redirect_to stocks_path, success: I18n.t("controllers.stocks.destroyed"), status: :see_other
   end
 
   private
