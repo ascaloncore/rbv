@@ -5,7 +5,9 @@ class StocksController < ApplicationController
   before_action :set_stock, only: %i[edit update destroy]
 
   def index
-    @stocks = current_user.stocks.includes(:category).order(created_at: :desc)
+    @stocks = current_user.stocks.includes(:category).order(
+      Arel.sql('purchase_date DESC NULLS LAST, created_at DESC')
+    )
   end
 
   def new
