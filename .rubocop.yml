@@ -45,6 +45,11 @@ Metrics/ClassLength:
 Style/AsciiComments:
   Enabled: false
 
+# Rails/StrongParametersExpectはテストファイル用のルールのため、コントローラーでは無効化
+Rails/StrongParametersExpect:
+  Exclude:
+    - 'app/controllers/**/*'
+
 # Overwrite or add rules to create your own house style
 #
 # # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`

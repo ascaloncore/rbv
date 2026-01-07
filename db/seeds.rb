@@ -11,17 +11,17 @@
 #   end
 
 # Category master data
-category_names = [
-  "書籍",
-  "動画",
-  "電子書籍",
-  "オンラインコース",
-  "オーディオブック",
-  "その他"
+category_names = %w[
+  書籍
+  動画
+  電子書籍
+  オンラインコース
+  オーディオブック
+  その他
 ]
 
 category_names.each do |name|
   Category.find_or_create_by!(name: name)
 end
 
-puts "Created #{Category.count} categories"
+Rails.logger.info "Created #{Category.count} categories"

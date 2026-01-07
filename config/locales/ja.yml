@@ -4,6 +4,14 @@
 
 ja:
   hello: "こんにちは、世界"
+  controllers:
+    application:
+      require_login: "ログインが必要です"
+    stocks:
+      created: "在庫を登録しました。"
+      create_failed: "登録に失敗しました。入力内容を確認してください。"
+      updated: "在庫を更新しました。"
+      destroyed: "在庫を削除しました。"
   activerecord:
     models:
       stock: "在庫"
