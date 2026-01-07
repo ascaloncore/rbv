@@ -9,10 +9,8 @@ module StocksHelper
       "badge-primary"     # 適正在庫 - プライマリ
     when "stagnant"
       "badge-warning"     # 滞留在庫 - 警告（黄色）
-    when "suspended"
-      "badge-error"       # 不良在庫 - エラー（赤）
-    when "impaired"
-      "badge-error"       # 読書撤退損 - エラー（赤）
+    when "suspended", "impaired"
+      "badge-error"       # 不良在庫/読書撤退損 - エラー（赤）
     when "completed"
       "badge-success"     # 知識資産 - 成功（緑）
     else
@@ -20,4 +18,3 @@ module StocksHelper
     end
   end
 end
-
