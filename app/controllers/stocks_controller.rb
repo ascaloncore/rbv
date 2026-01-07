@@ -19,6 +19,7 @@ class StocksController < ApplicationController
     if @stock.save
       redirect_to stocks_path, success: "在庫を登録しました。"
     else
+      flash.now[:danger] = "登録に失敗しました。入力内容を確認してください。"
       render :new, status: :unprocessable_entity
     end
   end
