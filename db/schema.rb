@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_08_154429) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_08_173236) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,8 +32,10 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_08_154429) do
   end
 
   create_table "stocks", force: :cascade do |t|
+    t.integer "book_value", default: 0
     t.bigint "category_id", null: false
     t.datetime "created_at", null: false
+    t.integer "impairment_loss", default: 0
     t.text "impression"
     t.date "purchase_date"
     t.integer "purchase_price"

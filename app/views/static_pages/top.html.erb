@@ -1,14 +1,38 @@
-<div class="space-y-4">
-  <h1 class="text-4xl font-bold">デザインシステム確認</h1>
-  
+<div class="space-y-6">
+  <h1 class="text-4xl font-bold text-center mb-8">ダッシュボード</h1>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <!-- 在庫金額総額 -->
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-lg text-gray-600 mb-2">在庫金額総額</h2>
+        <p class="text-4xl font-bold text-primary">
+          <%= number_to_currency(@total_inventory_value, unit: "¥", format: "%u %n", precision: 0) %>
+        </p>
+        <p class="text-sm text-gray-500 mt-2">ステータスが「完了」以外の在庫の帳簿価額の合計</p>
+      </div>
+    </div>
+
+    <!-- 知識資産総額 -->
+    <div class="card bg-base-100 shadow-xl">
+      <div class="card-body">
+        <h2 class="card-title text-lg text-gray-600 mb-2">知識資産総額</h2>
+        <p class="text-4xl font-bold text-success">
+          <%= number_to_currency(@total_knowledge_asset_value, unit: "¥", format: "%u %n", precision: 0) %>
+        </p>
+        <p class="text-sm text-gray-500 mt-2">ステータスが「完了」の在庫の帳簿価額の合計</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 減損損失累計額 -->
   <div class="card bg-base-100 shadow-xl">
     <div class="card-body">
-      <h2 class="card-title">daisyUIカード</h2>
-      <p>daisyUIが正しく読み込まれています。</p>
-      <div class="card-actions justify-end">
-        <button class="btn btn-primary">Primary</button>
-        <button class="btn btn-secondary">Secondary</button>
-      </div>
+      <h2 class="card-title text-lg text-gray-600 mb-2">減損損失累計額</h2>
+      <p class="text-3xl font-bold text-error">
+        <%= number_to_currency(@total_impairment_loss, unit: "¥", format: "%u %n", precision: 0) %>
+      </p>
+      <p class="text-sm text-gray-500 mt-2">ステータスが「完了」以外の在庫の減損損失の合計</p>
     </div>
   </div>
 </div>

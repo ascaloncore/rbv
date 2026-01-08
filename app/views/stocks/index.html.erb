@@ -7,32 +7,33 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @stocks.each do |stock| %>
         <div class="card bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title"><%= stock.title %></h2>
-            <div class="space-y-2">
+          <div class="card-body overflow-hidden">
+            <h2 class="card-title break-words overflow-hidden"><%= stock.title %></h2>
+            <div class="space-y-2 overflow-hidden">
               <p>
                 <span class="font-semibold">カテゴリ:</span>
                 <span class="badge badge-outline"><%= stock.category.name %></span>
               </p>
-              <% if stock.purchase_price %>
-                <p>
-                  <span class="font-semibold">購入金額:</span>
-                  <span><%= number_to_currency(stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %></span>
-                </p>
-              <% end %>
-              <% if stock.purchase_date %>
-                <p>
-                  <span class="font-semibold">購入日:</span>
-                  <span><%= stock.purchase_date.strftime("%Y年%m月%d日") %></span>
-                </p>
-              <% end %>
+              <p>
+                <span class="font-semibold">購入金額:</span>
+                <span><%= number_to_currency(stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %></span>
+              </p>
+              <p>
+                <span class="font-semibold">帳簿価額:</span>
+                <span><%= number_to_currency(stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+              </p>
+              <p>
+                <span class="font-semibold">減損損失:</span>
+                <span class="text-error"><%= number_to_currency(stock.impairment_loss || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+              </p>
+              <p>
+                <span class="font-semibold">購入日:</span>
+                <span><%= stock.purchase_date.strftime("%Y年%m月%d日") %></span>
+              </p>
               <p>
                 <span class="font-semibold">ステータス:</span>
                 <span class="badge <%= status_badge_class(stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{stock.status}") %></span>
               </p>
-              <% if stock.impression.present? %>
-                <p class="text-sm text-gray-600 overflow-hidden text-ellipsis line-clamp-2"><%= truncate(stock.impression, length: 100) %></p>
-              <% end %>
             </div>
             <div class="card-actions justify-end mt-4">
               <%= link_to "詳細", stock_path(stock), class: "btn btn-sm btn-info" %>

@@ -1,0 +1,112 @@
+<div class="mb-6">
+  <div class="mb-4">
+    <h1 class="text-3xl font-bold">減損処理</h1>
+    <p class="text-gray-600 mt-2">減損処理を実行する在庫を選択してください。ステータスが「完了」以外の在庫が表示されています。</p>
+  </div>
+
+  <%= form_with url: impairments_path, method: :post, local: true, id: "impairment-form", class: "space-y-4" do |f| %>
+    <% if @stocks.any? %>
+      <div class="mb-4">
+        <button type="button" id="select-all" class="btn btn-sm btn-outline mb-4">全て選択</button>
+        <button type="button" id="deselect-all" class="btn btn-sm btn-outline mb-4">全て解除</button>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <% @stocks.each do |stock| %>
+          <div class="card bg-base-100 shadow-xl">
+            <div class="card-body">
+              <div class="form-control">
+                <label class="label cursor-pointer justify-start gap-3">
+                  <%= check_box_tag "stock_ids[]", stock.id, false, class: "checkbox checkbox-primary", id: "stock_#{stock.id}" %>
+                  <div class="flex-1 min-w-0 overflow-hidden">
+                    <h2 class="card-title break-words"><%= stock.title %></h2>
+                    <div class="space-y-2 mt-2">
+                      <p>
+                        <span class="font-semibold">カテゴリ:</span>
+                        <span class="badge badge-outline"><%= stock.category.name %></span>
+                      </p>
+                      <p>
+                        <span class="font-semibold">購入金額:</span>
+                        <span><%= number_to_currency(stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %></span>
+                      </p>
+                      <p>
+                        <span class="font-semibold">帳簿価額:</span>
+                        <span><%= number_to_currency(stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+                      </p>
+                      <p>
+                        <span class="font-semibold">減損損失:</span>
+                        <span class="text-error"><%= number_to_currency(stock.impairment_loss || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+                      </p>
+                      <% if stock.purchase_date %>
+                        <p>
+                          <span class="font-semibold">購入日:</span>
+                          <span><%= stock.purchase_date.strftime("%Y年%m月%d日") %></span>
+                        </p>
+                      <% end %>
+                      <p>
+                        <span class="font-semibold">ステータス:</span>
+                        <span class="badge <%= status_badge_class(stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{stock.status}") %></span>
+                      </p>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-6">
+        <%= f.submit "減損処理実行", class: "btn btn-error btn-lg w-full md:w-auto", id: "impairment-submit", data: { turbo_confirm: "減損処理を実行しますが、よろしいですか？" } %>
+      </div>
+    <% else %>
+      <div class="alert alert-info">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+        </svg>
+        <span>減損処理可能な在庫がありません。</span>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const selectAllBtn = document.getElementById('select-all');
+    const deselectAllBtn = document.getElementById('deselect-all');
+    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="stock_ids[]"]');
+    const submitBtn = document.getElementById('impairment-submit');
+
+    if (selectAllBtn) {
+      selectAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = true;
+        });
+        updateSubmitButton();
+      });
+    }
+
+    if (deselectAllBtn) {
+      deselectAllBtn.addEventListener('click', function() {
+        checkboxes.forEach(checkbox => {
+          checkbox.checked = false;
+        });
+        updateSubmitButton();
+      });
+    }
+
+    function updateSubmitButton() {
+      const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+      if (submitBtn) {
+        submitBtn.disabled = checkedCount === 0;
+      }
+    }
+
+    checkboxes.forEach(checkbox => {
+      checkbox.addEventListener('change', updateSubmitButton);
+    });
+
+    // 初期状態でボタンを無効化
+    updateSubmitButton();
+  });
+</script>
