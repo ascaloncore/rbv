@@ -34,6 +34,13 @@
           </div>
 
           <div>
+            <h3 class="font-semibold text-lg mb-2">帳簿価額</h3>
+            <p class="text-xl">
+              <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %>
+            </p>
+          </div>
+
+          <div>
             <h3 class="font-semibold text-lg mb-2">購入日</h3>
             <p class="text-xl">
               <% if @stock.purchase_date %>
@@ -43,12 +50,19 @@
               <% end %>
             </p>
           </div>
+
+          <div>
+            <h3 class="font-semibold text-lg mb-2">減損損失</h3>
+            <p class="text-xl text-error">
+              <%= number_to_currency(@stock.impairment_loss || 0, unit: "¥", format: "%u %n", precision: 0) %>
+            </p>
+          </div>
         </div>
 
         <% if @stock.impression.present? %>
           <div>
             <h3 class="font-semibold text-lg mb-2">感想・メモ</h3>
-            <p class="whitespace-pre-wrap"><%= @stock.impression %></p>
+            <p class="break-words whitespace-pre-wrap"><%= @stock.impression %></p>
           </div>
         <% end %>
 

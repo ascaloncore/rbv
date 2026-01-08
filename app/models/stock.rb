@@ -17,4 +17,57 @@ class Stock < ApplicationRecord
   validates :title, presence: true, length: { maximum: 255 }
   validates :purchase_price, presence: true, numericality: { greater_than_or_equal_to: 0, only_integer: true }
   validates :status, presence: true
+
+  # コールバック: 新規作成時または購入金額変更時にbook_valueとimpairment_lossを自動設定
+  before_validation :set_book_value_and_impairment_loss, if: :should_update_book_value?
+
+  # スコープ: 完了以外の在庫
+  scope :not_completed, -> { where.not(status: :completed) }
+
+  # 集計メソッド（クラスメソッド）
+  class << self
+    # 在庫金額総額（完了以外のbook_valueの合計）
+    def total_inventory_value
+      not_completed.sum(:book_value) || 0
+    end
+
+    # 知識資産総額（完了のbook_valueの合計）
+    def total_knowledge_asset_value
+      where(status: :completed).sum(:book_value) || 0
+    end
+
+    # 減損損失累計額（完了以外のimpairment_lossの合計）
+    def total_impairment_loss
+      not_completed.sum(:impairment_loss) || 0
+    end
+  end
+
+  private
+
+  def should_update_book_value?
+    # 新規作成時、または購入金額が変更された場合
+    new_record? || purchase_price_changed?
+  end
+
+  def set_book_value_and_impairment_loss
+    return unless purchase_price
+
+    # カラムが存在することを確認
+    return unless has_attribute?(:book_value) && has_attribute?(:impairment_loss)
+
+    # book_valueにpurchase_priceをコピー
+    # 新規作成時または購入金額が変更された場合は、常に更新
+    if new_record?
+      self.book_value = purchase_price if book_value.nil? || book_value.zero?
+    elsif purchase_price_changed?
+      # 編集時に購入金額が変更された場合、帳簿価額も更新
+      self.book_value = purchase_price
+    end
+
+    # impairment_lossを計算（purchase_price - book_value）
+    self.impairment_loss = purchase_price - book_value
+    # 0円以上に制限
+    self.impairment_loss = [impairment_loss, 0].max
+  end
 end
+

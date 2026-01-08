@@ -17,6 +17,11 @@ ja:
       created: "メモを投稿しました。"
       create_failed: "メモの投稿に失敗しました。入力内容を確認してください。"
       destroyed: "メモを削除しました。"
+    impairments:
+      processed: "%{count}件の在庫に減損処理を実行しました。"
+      no_selection: "減損処理する在庫を選択してください。"
+      invalid_selection: "無効な在庫が選択されています。"
+      process_failed: "減損処理の実行に失敗しました。"
   activerecord:
     models:
       stock: "在庫"
@@ -25,6 +30,8 @@ ja:
       stock:
         title: "タイトル"
         purchase_price: "購入金額"
+        book_value: "帳簿価額"
+        impairment_loss: "減損損失"
         purchase_date: "購入日"
         status: "ステータス"
         impression: "感想"

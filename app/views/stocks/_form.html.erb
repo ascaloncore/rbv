@@ -34,6 +34,11 @@
       <span class="label-text">購入金額（円） <span class="text-error">*</span></span>
     <% end %>
     <%= f.number_field :purchase_price, class: "input input-bordered w-full", placeholder: "0", min: 0, step: 1, required: true %>
+    <% unless @stock.new_record? %>
+      <div class="label">
+        <span class="label-text-alt text-gray-500">帳簿価額: <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+      </div>
+    <% end %>
   </div>
 
   <div class="form-control">
