@@ -7,9 +7,9 @@
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       <% @stocks.each do |stock| %>
         <div class="card bg-base-100 shadow-xl">
-          <div class="card-body">
-            <h2 class="card-title"><%= stock.title %></h2>
-            <div class="space-y-2">
+          <div class="card-body overflow-hidden">
+            <h2 class="card-title break-words overflow-hidden"><%= stock.title %></h2>
+            <div class="space-y-2 overflow-hidden">
               <p>
                 <span class="font-semibold">カテゴリ:</span>
                 <span class="badge badge-outline"><%= stock.category.name %></span>
@@ -33,9 +33,6 @@
               <p>
                 <span class="font-semibold">ステータス:</span>
                 <span class="badge <%= status_badge_class(stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{stock.status}") %></span>
-              </p>
-              <p class="text-sm text-gray-600 overflow-hidden text-ellipsis line-clamp-1 break-words min-h-[1.5rem]">
-                <%= stock.impression.present? ? stock.impression : "&nbsp;".html_safe %>
               </p>
             </div>
             <div class="card-actions justify-end mt-4">

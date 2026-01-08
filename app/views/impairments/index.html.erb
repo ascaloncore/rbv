@@ -18,8 +18,8 @@
               <div class="form-control">
                 <label class="label cursor-pointer justify-start gap-3">
                   <%= check_box_tag "stock_ids[]", stock.id, false, class: "checkbox checkbox-primary", id: "stock_#{stock.id}" %>
-                  <div class="flex-1">
-                    <h2 class="card-title"><%= stock.title %></h2>
+                  <div class="flex-1 min-w-0 overflow-hidden">
+                    <h2 class="card-title break-words"><%= stock.title %></h2>
                     <div class="space-y-2 mt-2">
                       <p>
                         <span class="font-semibold">カテゴリ:</span>
