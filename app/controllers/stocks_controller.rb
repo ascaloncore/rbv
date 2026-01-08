@@ -12,6 +12,8 @@ class StocksController < ApplicationController
 
   def show
     # @stock is set by set_stock before_action
+    # N+1クエリを防ぐためにuserをincludes
+    @stock.memos.includes(:user)
   end
 
   def new

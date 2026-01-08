@@ -63,4 +63,50 @@
       </div>
     </div>
   </div>
+
+  <div class="card bg-base-100 shadow-xl mt-6">
+    <div class="card-body">
+      <h2 class="text-2xl font-bold mb-4">学習メモ</h2>
+
+      <!-- 新規投稿フォーム -->
+      <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
+        <div class="form-control">
+          <%= f.label :body, class: "label" do %>
+            <span class="label-text">メモを入力</span>
+          <% end %>
+          <%= f.text_area :body, class: "textarea textarea-bordered w-full h-24", placeholder: "学習メモを入力してください", required: true %>
+        </div>
+        <div class="form-control mt-2">
+          <%= f.submit "投稿", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <!-- メモ一覧 -->
+      <% if @stock.memos.any? %>
+        <div class="space-y-4">
+          <% @stock.memos.includes(:user).order(created_at: :desc).each do |memo| %>
+            <div class="border-b border-gray-200 pb-4 last:border-b-0">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <p class="font-semibold"><%= memo.user.name %></p>
+                  <p class="text-sm text-gray-500"><%= memo.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+                </div>
+                <% if memo.user == current_user %>
+                  <%= link_to "削除", stock_memo_path(@stock, memo), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-error" %>
+                <% end %>
+              </div>
+              <p class="whitespace-pre-wrap"><%= memo.body %></p>
+            </div>
+          <% end %>
+        </div>
+      <% else %>
+        <div class="alert alert-info">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          <span>まだメモが投稿されていません。上記のフォームからメモを投稿してください。</span>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>

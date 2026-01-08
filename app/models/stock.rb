@@ -3,6 +3,7 @@
 class Stock < ApplicationRecord
   belongs_to :user
   belongs_to :category
+  has_many :memos, dependent: :destroy
 
   enum :status, {
     unread: 0,       # 未読 (適正在庫)
