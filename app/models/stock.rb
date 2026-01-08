@@ -51,23 +51,26 @@ class Stock < ApplicationRecord
 
   def set_book_value_and_impairment_loss
     return unless purchase_price
+    return unless attributes_exist?
 
-    # カラムが存在することを確認
-    return unless has_attribute?(:book_value) && has_attribute?(:impairment_loss)
+    update_book_value
+    calculate_impairment_loss
+  end
 
-    # book_valueにpurchase_priceをコピー
-    # 新規作成時または購入金額が変更された場合は、常に更新
+  def attributes_exist?
+    has_attribute?(:book_value) && has_attribute?(:impairment_loss)
+  end
+
+  def update_book_value
     if new_record?
       self.book_value = purchase_price if book_value.nil? || book_value.zero?
     elsif purchase_price_changed?
-      # 編集時に購入金額が変更された場合、帳簿価額も更新
       self.book_value = purchase_price
     end
+  end
 
-    # impairment_lossを計算（purchase_price - book_value）
+  def calculate_impairment_loss
     self.impairment_loss = purchase_price - book_value
-    # 0円以上に制限
     self.impairment_loss = [impairment_loss, 0].max
   end
 end
-

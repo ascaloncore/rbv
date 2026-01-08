@@ -12,42 +12,46 @@ class ImpairmentsController < ApplicationController
 
   def create
     stock_ids = params[:stock_ids] || []
+    return redirect_with_error(:no_selection) if stock_ids.empty?
 
-    if stock_ids.empty?
-      redirect_to impairments_path, danger: I18n.t("controllers.impairments.no_selection")
-      return
-    end
+    stocks = find_target_stocks(stock_ids)
+    return redirect_with_error(:invalid_selection) if stocks.empty?
 
-    # 選択された在庫を取得（自分の在庫のみ）
-    stocks = current_user.stocks.not_completed.where(id: stock_ids)
+    processed_count = process_impairments(stocks)
+    redirect_to root_path, success: I18n.t("controllers.impairments.processed", count: processed_count)
+  rescue StandardError
+    redirect_to impairments_path, danger: I18n.t("controllers.impairments.process_failed")
+  end
 
-    if stocks.empty?
-      redirect_to impairments_path, danger: I18n.t("controllers.impairments.invalid_selection")
-      return
-    end
+  private
 
-    # 減損処理を実行
+  def find_target_stocks(stock_ids)
+    current_user.stocks.not_completed.where(id: stock_ids)
+  end
+
+  def process_impairments(stocks)
     processed_count = 0
     ActiveRecord::Base.transaction do
       stocks.each do |stock|
-        # ステータスを「減損損失(impaired: 40)」に変更
-        stock.status = :impaired
-
-        # book_valueを1円に設定
-        stock.book_value = 1
-
-        # impairment_lossを再計算（purchase_price - book_value）
-        stock.impairment_loss = (stock.purchase_price || 0) - stock.book_value
-        # 0円以上に制限
-        stock.impairment_loss = [stock.impairment_loss, 0].max
-
+        apply_impairment(stock)
         stock.save!
         processed_count += 1
       end
     end
+    processed_count
+  end
 
-    redirect_to root_path, success: I18n.t("controllers.impairments.processed", count: processed_count)
-  rescue StandardError
-    redirect_to impairments_path, danger: I18n.t("controllers.impairments.process_failed")
+  def apply_impairment(stock)
+    stock.status = :impaired
+    stock.book_value = 1
+    stock.impairment_loss = calculate_impairment_loss(stock.purchase_price, stock.book_value)
+  end
+
+  def calculate_impairment_loss(purchase_price, book_value)
+    [(purchase_price || 0) - book_value, 0].max
+  end
+
+  def redirect_with_error(error_key)
+    redirect_to impairments_path, danger: I18n.t("controllers.impairments.#{error_key}")
   end
 end
