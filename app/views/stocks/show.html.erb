@@ -95,7 +95,7 @@
                   <%= link_to "削除", stock_memo_path(@stock, memo), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-error" %>
                 <% end %>
               </div>
-              <p class="whitespace-pre-wrap"><%= memo.body %></p>
+              <p class="break-words whitespace-pre-wrap"><%= memo.body %></p>
             </div>
           <% end %>
         </div>
