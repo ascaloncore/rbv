@@ -5,6 +5,7 @@ class User < ApplicationRecord
 
   # Associations
   has_many :stocks, dependent: :destroy
+  has_many :memos, dependent: :destroy
 
   # Validations
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }

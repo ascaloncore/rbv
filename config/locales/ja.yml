@@ -13,9 +13,14 @@ ja:
       updated: "在庫を更新しました。"
       update_failed: "更新に失敗しました。入力内容を確認してください。"
       destroyed: "在庫を削除しました。"
+    memos:
+      created: "メモを投稿しました。"
+      create_failed: "メモの投稿に失敗しました。入力内容を確認してください。"
+      destroyed: "メモを削除しました。"
   activerecord:
     models:
       stock: "在庫"
+      memo: "メモ"
     attributes:
       stock:
         title: "タイトル"
@@ -24,6 +29,8 @@ ja:
         status: "ステータス"
         impression: "感想"
         category_id: "カテゴリ"
+      memo:
+        body: "本文"
     enums:
       stock:
         status:

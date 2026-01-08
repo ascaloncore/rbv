@@ -63,4 +63,43 @@
       </div>
     </div>
   </div>
+
+  <div class="card bg-base-100 shadow-xl mt-6">
+    <div class="card-body">
+      <h2 class="text-2xl font-bold mb-4">読書メモ</h2>
+
+      <!-- 新規投稿フォーム -->
+      <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
+        <div class="form-control">
+          <%= f.label :body, class: "label" do %>
+            <span class="label-text">メモを入力（400文字以内）</span>
+          <% end %>
+          <%= f.text_area :body, class: "textarea textarea-bordered w-full h-24", placeholder: "読書メモを入力してください", required: true, maxlength: 400 %>
+        </div>
+        <div class="form-control mt-2">
+          <%= f.submit "投稿", class: "btn btn-primary" %>
+        </div>
+      <% end %>
+
+      <!-- メモ一覧 -->
+      <% if @stock.memos.any? %>
+        <div class="space-y-4">
+          <% @stock.memos.includes(:user).order(created_at: :desc).each do |memo| %>
+            <div class="border-b border-gray-200 pb-4 last:border-b-0">
+              <div class="flex justify-between items-start mb-2">
+                <div>
+                  <p class="font-semibold"><%= memo.user.name %></p>
+                  <p class="text-sm text-gray-500"><%= memo.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
+                </div>
+                <% if memo.user == current_user %>
+                  <%= link_to "削除", stock_memo_path(@stock, memo), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-error" %>
+                <% end %>
+              </div>
+              <p class="break-words whitespace-pre-wrap"><%= memo.body %></p>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
 </div>
