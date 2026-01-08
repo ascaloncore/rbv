@@ -66,15 +66,15 @@
 
   <div class="card bg-base-100 shadow-xl mt-6">
     <div class="card-body">
-      <h2 class="text-2xl font-bold mb-4">学習メモ</h2>
+      <h2 class="text-2xl font-bold mb-4">読書メモ</h2>
 
       <!-- 新規投稿フォーム -->
       <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
         <div class="form-control">
           <%= f.label :body, class: "label" do %>
-            <span class="label-text">メモを入力</span>
+            <span class="label-text">メモを入力（400文字以内）</span>
           <% end %>
-          <%= f.text_area :body, class: "textarea textarea-bordered w-full h-24", placeholder: "学習メモを入力してください", required: true %>
+          <%= f.text_area :body, class: "textarea textarea-bordered w-full h-24", placeholder: "読書メモを入力してください", required: true, maxlength: 400 %>
         </div>
         <div class="form-control mt-2">
           <%= f.submit "投稿", class: "btn btn-primary" %>
@@ -104,7 +104,7 @@
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" class="stroke-current shrink-0 w-6 h-6">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
           </svg>
-          <span>まだメモが投稿されていません。上記のフォームからメモを投稿してください。</span>
+          <span>まだ読書メモが投稿されていません。上記のフォームからメモを投稿してください。</span>
         </div>
       <% end %>
     </div>
