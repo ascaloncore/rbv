@@ -64,6 +64,9 @@
     <div class="flex gap-4">
       <%= f.submit @stock.new_record? ? "登録" : "更新", class: "btn btn-primary flex-1" %>
       <%= link_to "キャンセル", stocks_path, class: "btn btn-outline flex-1" %>
+      <% unless @stock.new_record? %>
+        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-error flex-1" %>
+      <% end %>
     </div>
   </div>
 <% end %>

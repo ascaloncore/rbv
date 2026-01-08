@@ -2,12 +2,16 @@
 
 class StocksController < ApplicationController
   before_action :require_login
-  before_action :set_stock, only: %i[edit update destroy]
+  before_action :set_stock, only: %i[show edit update destroy]
 
   def index
     @stocks = current_user.stocks.includes(:category).order(
       Arel.sql('purchase_date DESC NULLS LAST, created_at DESC')
     )
+  end
+
+  def show
+    # @stock is set by set_stock before_action
   end
 
   def new
