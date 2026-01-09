@@ -1,32 +1,25 @@
-<div class="navbar bg-base-100 shadow-lg">
-  <div class="flex-1">
-    <%= link_to root_path, class: "btn btn-ghost text-xl" do %>
-      RBV
-    <% end %>
+<nav class="bg-[#050505]/90 backdrop-blur-md border-b border-[#1A1C23] sticky top-0 z-50">
+  <div class="container mx-auto px-4 md:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      <div class="flex items-center">
+        <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
+          <%= image_tag "rbv-icon.png", alt: "RBV", class: "h-8 w-8 md:h-10 md:w-10 group-hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all" %>
+          <span class="text-sm text-[#94A3B8] hidden md:inline">
+            READING BOOK VALUE
+          </span>
+        <% end %>
+      </div>
+      <div class="flex items-center space-x-2">
+        <% if logged_in? %>
+          <%= link_to "在庫登録", new_stock_path, class: "px-4 py-2 text-[#FFFFFF] hover:text-[#00F0FF] hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all font-medium" %>
+          <%= link_to "在庫一覧", stocks_path, class: "px-4 py-2 text-[#FFFFFF] hover:text-[#00F0FF] hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all font-medium" %>
+          <%= link_to "減損処理", impairments_path, class: "px-4 py-2 text-[#FFFFFF] hover:text-[#00F0FF] hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all font-medium" %>
+          <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "px-4 py-2 text-[#FFFFFF] hover:text-[#EF4444] hover:drop-shadow-[0_0_8px_rgba(239,68,68,0.5)] transition-all font-medium" %>
+        <% else %>
+          <%= link_to "ユーザー登録", new_user_path, class: "px-4 py-2 text-[#FFFFFF] hover:text-[#00F0FF] hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all font-medium" %>
+          <%= link_to "ログイン", login_path, class: "px-4 py-2 bg-[#00F0FF] text-[#050505] hover:bg-[#00D0DF] font-bold rounded transition-all" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-  <div class="flex-none">
-    <ul class="menu menu-horizontal px-1">
-      <% if logged_in? %>
-        <li>
-          <%= link_to "在庫登録", new_stock_path, class: "btn btn-ghost" %>
-        </li>
-        <li>
-          <%= link_to "在庫一覧", stocks_path, class: "btn btn-ghost" %>
-        </li>
-        <li>
-          <%= link_to "減損処理", impairments_path, class: "btn btn-ghost" %>
-        </li>
-        <li>
-          <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "btn btn-ghost" %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "ユーザー登録", new_user_path, class: "btn btn-ghost" %>
-        </li>
-        <li>
-          <%= link_to "ログイン", login_path, class: "btn btn-ghost" %>
-        </li>
-      <% end %>
-    </ul>
-  </div>
-</div>
+</nav>
