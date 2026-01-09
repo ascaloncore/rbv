@@ -1,32 +1,73 @@
 <div class="space-y-6">
-  <h1 class="text-4xl md:text-5xl font-bold text-center mb-8 text-[#FFFFFF]">ダッシュボード</h1>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-    <!-- 在庫金額総額（負債） -->
-    <div class="bg-[#1A1C23] rounded-2xl border border-[#2E323A] border-l-4 border-l-red-500 p-6 shadow-lg hover:border-[#3E434A] transition-colors">
-      <h2 class="text-lg text-[#94A3B8] mb-2 font-semibold">在庫金額総額（リスク資産）</h2>
-      <p class="text-4xl md:text-5xl font-bold text-red-500 mb-2">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+    <!-- 在庫金額総額（リスク資産） -->
+    <div class="bg-gray-700 rounded-xl border-2 border-red-500/50 shadow-lg shadow-red-500/20 hover:border-red-500/80 hover:shadow-red-500/30 transition-all duration-300 p-4 relative overflow-hidden">
+      <div class="flex justify-between items-start mb-3">
+        <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">在庫金額総額<br>(BOOK VALUE : リスク資産)</h3>
+        <span class="bg-red-950 border border-red-500/30 text-red-200 text-xs font-bold px-3 py-1 rounded">将来の減損リスク</span>
+      </div>
+      
+      <div class="text-4xl md:text-5xl font-black font-mono text-red-400 mb-3 tracking-tight drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">
         <%= number_to_currency(@total_inventory_value, unit: "¥", format: "%u %n", precision: 0) %>
-      </p>
-      <p class="text-sm text-[#64748B] mt-2">ステータスが「完了」以外の在庫の帳簿価額の合計</p>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-xs text-slate-300 mb-2">適正在庫内訳:</p>
+        <div class="flex flex-wrap gap-2">
+          <% if @unread_count > 0 %>
+            <span class="bg-slate-800/80 text-slate-200 text-xs px-2 py-1 rounded border border-slate-600/50">
+              <%= @unread_count %> 未読: <%= number_to_currency(@unread_value, unit: "¥", format: "%u %n", precision: 0) %>
+            </span>
+          <% end %>
+          <% if @reading_count > 0 %>
+            <span class="bg-blue-900/40 border border-blue-500/30 text-blue-300 text-xs px-2 py-1 rounded">
+              <%= @reading_count %> 読書中: <%= number_to_currency(@reading_value, unit: "¥", format: "%u %n", precision: 0) %>
+            </span>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="text-xs text-red-300 font-medium leading-relaxed bg-red-950/30 p-2 rounded border border-red-500/20">
+        ⚠ この金額は、まだあなたの知識資産になっていません。<br>
+        完了させるまで、これは「リスク資産」です。
+      </div>
     </div>
 
-    <!-- 知識資産総額（資産） -->
-    <div class="bg-[#1A1C23] rounded-2xl border border-[#2E323A] border-l-4 border-l-emerald-500 p-6 shadow-lg hover:border-[#3E434A] transition-colors bg-emerald-500/5">
-      <h2 class="text-lg text-[#94A3B8] mb-2 font-semibold">獲得知識資産（資産）</h2>
-      <p class="text-4xl md:text-5xl font-bold text-emerald-400 mb-2">
+    <!-- 知識資産（資産） -->
+    <div class="bg-gray-700 rounded-xl border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20 hover:border-emerald-500/80 hover:shadow-emerald-500/30 transition-all duration-300 p-4 relative overflow-hidden">
+      <div class="flex justify-between items-start mb-3">
+        <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">知識資産<br>(INTELLECTUAL ASSET)</h3>
+        <span class="bg-emerald-950 border border-emerald-500/30 text-emerald-200 text-xs font-bold px-3 py-1 rounded">資産化完了</span>
+      </div>
+      
+      <div class="text-4xl md:text-5xl font-black font-mono text-emerald-400 mb-3 tracking-tight drop-shadow-[0_0_10px_rgba(16,185,129,0.5)]">
         <%= number_to_currency(@total_knowledge_asset_value, unit: "¥", format: "%u %n", precision: 0) %>
-      </p>
-      <p class="text-sm text-[#64748B] mt-2">ステータスが「完了」の在庫の帳簿価額の合計</p>
+      </div>
+      
+      <div class="mb-3">
+        <p class="text-slate-100 text-sm font-medium">
+          <%= @completed_count %> 読書完了: <%= @completed_count %>冊
+        </p>
+      </div>
+
+      <div class="text-xs text-slate-300 font-medium leading-relaxed">
+        獲得した知識は誰にも奪われないあなただけの資産です。<br>
+        この金額を増加させ、健全な財政状態を維持しましょう。
+      </div>
     </div>
   </div>
 
   <!-- 減損損失累計額 -->
-  <div class="bg-[#1A1C23] rounded-2xl border border-[#2E323A] p-6 shadow-lg hover:border-[#3E434A] transition-colors">
-    <h2 class="text-lg text-[#94A3B8] mb-2 font-semibold">減損損失累計額</h2>
-    <p class="text-3xl md:text-4xl font-bold text-[#EF4444] mb-2">
+  <div class="bg-gray-700 rounded-xl border border-gray-600 shadow-lg hover:border-gray-500 transition-all duration-300 p-4">
+    <h2 class="text-lg text-slate-300 mb-2 font-semibold">減損損失累計額</h2>
+    <p class="text-3xl md:text-4xl font-bold font-mono text-slate-300 mb-1">
       <%= number_to_currency(@total_impairment_loss, unit: "¥", format: "%u %n", precision: 0) %>
     </p>
-    <p class="text-sm text-[#64748B] mt-2">ステータスが「完了」以外の在庫の減損損失の合計</p>
+    <p class="text-sm text-slate-400 mt-2">ステータスが「完了」以外の在庫の減損損失の合計</p>
+  </div>
+
+  <!-- トップ画像 -->
+  <div class="mt-8 flex justify-center">
+    <%= image_tag "rbv-top-image.png", alt: "RBV Top Image", class: "max-w-full h-auto rounded-lg shadow-lg" %>
   </div>
 </div>

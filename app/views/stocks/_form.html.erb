@@ -1,5 +1,5 @@
 <div class="max-w-2xl mx-auto">
-  <%= form_with model: @stock, local: true, class: "bg-[#1A1C23] border border-[#2E323A] rounded-lg p-6 space-y-6" do |f| %>
+  <%= form_with model: @stock, local: true, class: "bg-gray-700 border border-gray-600 rounded-xl shadow-lg p-6 md:p-8 space-y-6" do |f| %>
     <% if @stock.errors.any? %>
       <div class="bg-[#450A0A] text-[#FECACA] border border-[#EF4444] rounded-lg p-4 flex items-start space-x-3">
         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
@@ -17,24 +17,24 @@
     <% end %>
 
     <div>
-      <%= f.label :title, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
-        タイトル <span class="text-[#EF4444]">*</span>
+      <%= f.label :title, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+        タイトル <span class="text-red-400">*</span>
       <% end %>
-      <%= f.text_field :title, class: "w-full bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none", placeholder: "学習資産のタイトルを入力してください", required: true %>
+      <%= f.text_field :title, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "学習資産のタイトルを入力してください", required: true %>
     </div>
 
     <div>
-      <%= f.label :category_id, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
-        カテゴリ <span class="text-[#EF4444]">*</span>
+      <%= f.label :category_id, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+        カテゴリ <span class="text-red-400">*</span>
       <% end %>
-      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none", required: true } %>
+      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300", required: true } %>
     </div>
 
     <div>
-      <%= f.label :purchase_price, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
-        購入金額（円） <span class="text-[#EF4444]">*</span>
+      <%= f.label :purchase_price, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+        購入金額（円） <span class="text-red-400">*</span>
       <% end %>
-      <%= f.number_field :purchase_price, class: "w-full bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none", placeholder: "0", min: 0, step: 1, required: true %>
+      <%= f.number_field :purchase_price, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "0", min: 0, step: 1, required: true %>
       <% unless @stock.new_record? %>
         <div class="mt-2">
           <span class="text-xs text-[#64748B]">帳簿価額: <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
@@ -43,34 +43,34 @@
     </div>
 
     <div>
-      <%= f.label :purchase_date, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
+      <%= f.label :purchase_date, class: "block text-sm font-medium text-gray-300 mb-2" do %>
         購入日
       <% end %>
-      <%= f.date_field :purchase_date, class: "w-full bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none" %>
+      <%= f.date_field :purchase_date, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" %>
     </div>
 
     <div>
-      <%= f.label :status, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
+      <%= f.label :status, class: "block text-sm font-medium text-gray-300 mb-2" do %>
         ステータス
       <% end %>
       <%= f.select :status, options_for_select(
         Stock.statuses.keys.map { |key| [I18n.t("activerecord.enums.stock.status.#{key}"), key] },
         @stock.status || "unread"
-      ), {}, { class: "w-full bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none" } %>
+      ), {}, { class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" } %>
     </div>
 
     <div>
-      <%= f.label :impression, class: "block text-sm font-medium text-[#94A3B8] mb-2" do %>
+      <%= f.label :impression, class: "block text-sm font-medium text-gray-300 mb-2" do %>
         感想・メモ
       <% end %>
-      <%= f.text_area :impression, class: "w-full h-32 bg-slate-800 border border-slate-600 text-[#FFFFFF] rounded p-3 focus:border-[#00F0FF] focus:ring-1 focus:ring-[#00F0FF] outline-none resize-none", placeholder: "感想やメモを入力してください" %>
+      <%= f.text_area :impression, class: "w-full h-32 bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "感想やメモを入力してください" %>
     </div>
 
-    <div class="flex flex-col md:flex-row gap-4 pt-4 border-t border-[#2E323A]">
-      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "flex-1 px-4 py-2 bg-[#00F0FF] text-[#050505] hover:bg-[#00D0DF] font-bold rounded transition-all cursor-pointer" %>
-      <%= link_to "キャンセル", stocks_path, class: "flex-1 px-4 py-2 bg-[#1A1C23] border border-[#2E323A] text-[#94A3B8] hover:border-[#00F0FF] hover:text-[#00F0FF] rounded text-center transition-all" %>
+    <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-700 mt-6">
+      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer" %>
+      <%= link_to "キャンセル", stocks_path, class: "px-8 py-3 border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-500 rounded-lg text-center transition-all duration-300" %>
       <% unless @stock.new_record? %>
-        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "flex-1 px-4 py-2 bg-[#450A0A] border border-[#EF4444] text-[#EF4444] hover:bg-[#EF4444] hover:text-[#FFFFFF] rounded text-center transition-all" %>
+        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-8 py-3 bg-red-600 text-white hover:bg-red-700 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-red-600/50" %>
       <% end %>
     </div>
   <% end %>
