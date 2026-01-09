@@ -67,42 +67,68 @@
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const selectAllBtn = document.getElementById('select-all');
-    const deselectAllBtn = document.getElementById('deselect-all');
-    const checkboxes = document.querySelectorAll('input[type="checkbox"][name="stock_ids[]"]');
-    const submitBtn = document.getElementById('impairment-submit');
+  (function() {
+    let initialized = false;
 
-    if (selectAllBtn) {
-      selectAllBtn.addEventListener('click', function() {
-        checkboxes.forEach(checkbox => {
-          checkbox.checked = true;
-        });
-        updateSubmitButton();
-      });
-    }
+    function initializeImpairmentForm() {
+      // 既に初期化済みの場合はスキップ
+      if (initialized) {
+        const submitBtn = document.getElementById('impairment-submit');
+        const checkboxes = document.querySelectorAll('input[type="checkbox"][name="stock_ids[]"]');
+        if (submitBtn) {
+          const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
+          submitBtn.disabled = checkedCount === 0;
+        }
+        return;
+      }
 
-    if (deselectAllBtn) {
-      deselectAllBtn.addEventListener('click', function() {
-        checkboxes.forEach(checkbox => {
-          checkbox.checked = false;
-        });
-        updateSubmitButton();
-      });
-    }
+      const selectAllBtn = document.getElementById('select-all');
+      const deselectAllBtn = document.getElementById('deselect-all');
+      const checkboxes = document.querySelectorAll('input[type="checkbox"][name="stock_ids[]"]');
+      const submitBtn = document.getElementById('impairment-submit');
 
-    function updateSubmitButton() {
-      const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
-      if (submitBtn) {
+      if (!submitBtn) return;
+
+      function updateSubmitButton() {
+        const checkedCount = Array.from(checkboxes).filter(cb => cb.checked).length;
         submitBtn.disabled = checkedCount === 0;
       }
+
+      if (selectAllBtn) {
+        selectAllBtn.addEventListener('click', function() {
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+          });
+          updateSubmitButton();
+        });
+      }
+
+      if (deselectAllBtn) {
+        deselectAllBtn.addEventListener('click', function() {
+          checkboxes.forEach(checkbox => {
+            checkbox.checked = false;
+          });
+          updateSubmitButton();
+        });
+      }
+
+      checkboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', updateSubmitButton);
+      });
+
+      // 初期状態でボタンを更新
+      updateSubmitButton();
+      initialized = true;
     }
 
-    checkboxes.forEach(checkbox => {
-      checkbox.addEventListener('change', updateSubmitButton);
-    });
-
-    // 初期状態でボタンを無効化
-    updateSubmitButton();
-  });
+    // Turbo対応: 複数のイベントに対応
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initializeImpairmentForm);
+    } else {
+      initializeImpairmentForm();
+    }
+    
+    document.addEventListener('turbo:load', initializeImpairmentForm);
+    document.addEventListener('turbo:frame-load', initializeImpairmentForm);
+  })();
 </script>

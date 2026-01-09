@@ -1,53 +1,64 @@
-<div class="max-w-md mx-auto">
-  <h1 class="text-3xl md:text-4xl font-bold mb-6 text-center text-[#FFFFFF]">ユーザー登録</h1>
-
-  <%= form_with model: @user, url: users_path, local: true, class: "bg-gray-700 border border-gray-600 rounded-xl p-6 md:p-8 space-y-6 shadow-lg" do |f| %>
-    <% if @user.errors.any? %>
-      <div class="bg-[#450A0A] text-[#FECACA] border border-[#EF4444] rounded-lg p-4 flex items-start space-x-3">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center px-4">
+  <div class="w-full max-w-2xl">
+    <div class="bg-[#4B5563] border-2 border-gray-400 rounded-3xl p-12 shadow-2xl">
+      
+      <%= form_with model: @user, url: users_path, local: true, class: "space-y-12" do |f| %>
+        <% if @user.errors.any? %>
+          <div class="bg-[#FF2D55] text-white shadow-[0_0_15px_rgba(255,45,85,0.5)] rounded-xl p-4 mb-4 flex items-start space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-bold mb-2">エラーがあります</h3>
+              <ul class="list-disc list-inside space-y-1">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        
         <div>
-          <h3 class="font-bold mb-2">エラーがあります</h3>
-          <ul class="list-disc list-inside space-y-1">
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
+          <%= f.label :name, "名前", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.text_field :name, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "名前を入力してください", required: true %>
         </div>
-      </div>
-    <% end %>
 
-    <div>
-      <%= f.label :name, class: "block text-sm font-medium text-gray-300 mb-2" do %>
-        名前
+        <div>
+          <%= f.label :email, "メールアドレス", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.email_field :email, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "example@email.com", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :password, "パスワード", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.password_field :password, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "8文字以上", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "パスワード（確認）", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.password_field :password_confirmation, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "パスワードを再入力してください", required: true %>
+        </div>
+
+        <div class="pt-4">
+          <%= f.submit "登録", 
+              class: "appearance-none block w-full h-16 bg-white hover:bg-gray-100 text-black font-black text-3xl rounded-2xl shadow-xl hover:shadow-2xl cursor-pointer transition-transform active:scale-95 border-none flex items-center justify-center",
+              style: "font-size: 25px !important;background-color: #ffffff !important; color: #000000 !important; height: 64px !important;" %>
+        </div>
       <% end %>
-      <%= f.text_field :name, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "名前を入力してください" %>
     </div>
 
-    <div>
-      <%= f.label :email, class: "block text-sm font-medium text-gray-300 mb-2" do %>
-        メールアドレス
-      <% end %>
-      <%= f.email_field :email, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "example@email.com" %>
+    <div class="mt-12 text-center">
+      <p class="text-gray-300 text-xl mb-3">アカウントをお持ちの方は</p>
+      <%= link_to "ログインはこちら", login_path, class: "inline-block text-[#00F0FF] font-bold text-2xl border-b-4 border-[#00F0FF] hover:text-white hover:border-white transition-colors pb-1" %>
     </div>
 
-    <div>
-      <%= f.label :password, class: "block text-sm font-medium text-gray-300 mb-2" do %>
-        パスワード
-      <% end %>
-      <%= f.password_field :password, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "8文字以上" %>
-    </div>
-
-    <div>
-      <%= f.label :password_confirmation, class: "block text-sm font-medium text-gray-300 mb-2" do %>
-        パスワード（確認）
-      <% end %>
-      <%= f.password_field :password_confirmation, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "パスワードを再入力してください" %>
-    </div>
-
-    <div class="pt-4 border-t border-gray-700">
-      <%= f.submit "登録", class: "w-full px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 font-bold rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer" %>
-    </div>
-  <% end %>
+  </div>
 </div>
