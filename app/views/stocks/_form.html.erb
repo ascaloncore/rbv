@@ -17,21 +17,21 @@
     <% end %>
 
     <div>
-      <%= f.label :title, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :title, class: "block text-base font-medium text-gray-300 mb-2" do %>
         タイトル <span class="text-red-400">*</span>
       <% end %>
       <%= f.text_field :title, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "学習資産のタイトルを入力してください", required: true %>
     </div>
 
     <div>
-      <%= f.label :category_id, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :category_id, class: "block text-base font-medium text-gray-300 mb-2" do %>
         カテゴリ <span class="text-red-400">*</span>
       <% end %>
       <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300", required: true } %>
     </div>
 
     <div>
-      <%= f.label :purchase_price, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :purchase_price, class: "block text-base font-medium text-gray-300 mb-2" do %>
         購入金額（円） <span class="text-red-400">*</span>
       <% end %>
       <%= f.number_field :purchase_price, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "0", min: 0, step: 1, required: true %>
@@ -43,14 +43,14 @@
     </div>
 
     <div>
-      <%= f.label :purchase_date, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :purchase_date, class: "block text-base font-medium text-gray-300 mb-2" do %>
         購入日
       <% end %>
       <%= f.date_field :purchase_date, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" %>
     </div>
 
     <div>
-      <%= f.label :status, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :status, class: "block text-base font-medium text-gray-300 mb-2" do %>
         ステータス
       <% end %>
       <%= f.select :status, options_for_select(
@@ -60,17 +60,17 @@
     </div>
 
     <div>
-      <%= f.label :impression, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+      <%= f.label :impression, class: "block text-base font-medium text-gray-300 mb-2" do %>
         読書メモ（任意）
       <% end %>
       <%= f.text_area :impression, class: "w-full h-16 bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください" %>
     </div>
 
     <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-700 mt-6">
-      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "px-8 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-bold rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all duration-300 cursor-pointer" %>
-      <%= link_to "キャンセル", stocks_path, class: "px-8 py-3 border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-500 rounded-lg text-center transition-all duration-300" %>
+      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "flex-1 px-8 py-3 !bg-white text-gray-900 font-bold rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:bg-gray-100 hover:scale-105 transition-all duration-300 cursor-pointer text-[25px]" %>
+      <%= link_to "キャンセル", stocks_path, class: "px-8 py-3 bg-gray-600 text-white hover:bg-gray-500 rounded-lg text-center transition-all duration-300 shadow-md flex items-center justify-center" %>
       <% unless @stock.new_record? %>
-        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-8 py-3 bg-red-600 text-white hover:bg-red-700 rounded-lg text-center transition-all duration-300 shadow-lg hover:shadow-red-600/50" %>
+        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-8 py-3 bg-gray-600 text-white hover:bg-red-600 rounded-lg text-center transition-all duration-300 shadow-md flex items-center justify-center" %>
       <% end %>
     </div>
   <% end %>
