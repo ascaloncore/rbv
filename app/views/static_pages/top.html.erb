@@ -12,16 +12,31 @@
       </div>
       
       <div class="mb-3">
-        <p class="text-xs text-slate-300 mb-2">適正在庫内訳:</p>
+        <p class="text-s text-slate-300 mb-2">在庫内訳:</p>
         <div class="flex flex-wrap gap-2">
           <% if @unread_count > 0 %>
-            <span class="bg-slate-800/80 text-slate-200 text-xs px-2 py-1 rounded border border-slate-600/50">
-              <%= @unread_count %> 未読: <%= number_to_currency(@unread_value, unit: "¥", format: "%u %n", precision: 0) %>
+            <span class="bg-slate-800/80 text-slate-200 text-sm px-2 py-1 rounded border border-slate-600/50">
+              未読: <%= @unread_count %>冊 <%= number_to_currency(@unread_value, unit: "¥", format: "%u %n", precision: 0) %>
             </span>
           <% end %>
           <% if @reading_count > 0 %>
-            <span class="bg-blue-900/40 border border-blue-500/30 text-blue-300 text-xs px-2 py-1 rounded">
-              <%= @reading_count %> 読書中: <%= number_to_currency(@reading_value, unit: "¥", format: "%u %n", precision: 0) %>
+            <span class="bg-blue-900/40 border border-blue-500/30 text-blue-300 text-sm px-2 py-1 rounded">
+              読書中: <%= @reading_count %>冊 <%= number_to_currency(@reading_value, unit: "¥", format: "%u %n", precision: 0) %>
+            </span>
+          <% end %>
+          <% if @stagnant_count > 0 %>
+            <span class="bg-yellow-900/40 border border-yellow-500/30 text-yellow-300 text-sm px-2 py-1 rounded">
+              停滞中: <%= @stagnant_count %>冊 <%= number_to_currency(@stagnant_value, unit: "¥", format: "%u %n", precision: 0) %>
+            </span>
+          <% end %>
+          <% if @suspended_count > 0 %>
+            <span class="bg-orange-900/40 border border-orange-500/30 text-orange-300 text-sm px-2 py-1 rounded">
+              中断中: <%= @suspended_count %>冊 <%= number_to_currency(@suspended_value, unit: "¥", format: "%u %n", precision: 0) %>
+            </span>
+          <% end %>
+          <% if @impaired_count > 0 %>
+            <span class="bg-red-900/40 border border-red-500/30 text-red-300 text-sm px-2 py-1 rounded">
+              減損損失: <%= @impaired_count %>冊 <%= number_to_currency(@impaired_value, unit: "¥", format: "%u %n", precision: 0) %>
             </span>
           <% end %>
         </div>
@@ -29,14 +44,14 @@
 
       <div class="text-xs text-red-300 font-medium leading-relaxed bg-red-950/30 p-2 rounded border border-red-500/20">
         ⚠ この金額は、まだあなたの知識資産になっていません。<br>
-        完了させるまで、これは「リスク資産」です。
+           完了させるまで、これは「リスク資産」です。
       </div>
     </div>
 
     <!-- 知識資産（資産） -->
     <div class="bg-gray-700 rounded-xl border-2 border-emerald-500/50 shadow-lg shadow-emerald-500/20 hover:border-emerald-500/80 hover:shadow-emerald-500/30 transition-all duration-300 p-4 relative overflow-hidden">
       <div class="flex justify-between items-start mb-3">
-        <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">知識資産<br>(INTELLECTUAL ASSET)</h3>
+        <h3 class="text-sm font-bold text-slate-100 uppercase tracking-wider">知識資産<br>(INTELLECTUAL ASSET：生涯資産)</h3>
         <span class="bg-emerald-950 border border-emerald-500/30 text-emerald-200 text-xs font-bold px-3 py-1 rounded">資産化完了</span>
       </div>
       
@@ -45,14 +60,19 @@
       </div>
       
       <div class="mb-3">
-        <p class="text-slate-100 text-sm font-medium">
-          <%= @completed_count %> 読書完了: <%= @completed_count %>冊
-        </p>
+        <p class="text-s text-slate-300 mb-2">獲得知識:</p>
+          <span class="bg-blue-900/40 border border-blue-500/30 text-blue-300 text-sm px-2 py-1 rounded">
+          読書完了: <%= @completed_count %>冊
+          </span><br>
+          <span class="text-s px-2 py-1 rounded">
+            　<br>
+          </span>
+
       </div>
 
-      <div class="text-xs text-slate-300 font-medium leading-relaxed">
-        獲得した知識は誰にも奪われないあなただけの資産です。<br>
-        この金額を増加させ、健全な財政状態を維持しましょう。
+      <div class="text-xs text-blue-300 font-medium leading-relaxed bg-blue-950/30 p-2 rounded border border-red-500/20">
+        📒 獲得した知識は誰にも奪われないあなただけの資産です。<br>
+           この金額を増加させ、健全な財政状態を維持しましょう。
       </div>
     </div>
   </div>

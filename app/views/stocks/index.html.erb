@@ -32,9 +32,9 @@
             </p>
           </div>
           <div class="flex flex-wrap gap-2 mt-4 pt-4 border-t border-gray-700">
-            <%= link_to "詳細", stock_path(stock), class: "px-4 py-2 bg-blue text-white hover:from-cyan-400 hover:to-blue-500 font-bold rounded-lg text-sm shadow-lg hover:shadow-cyan-500/50 transition-all duration-300", style: "color: #ffffff !important; font-size: 25px !important;" %>
-            <%= link_to "編集", edit_stock_path(stock), class: "px-4 py-2 bg-white text-black hover:bg-gray-100 hover:text-black hover:border-gray-500 font-bold rounded-lg text-sm transition-all duration-300", style: "color: #000000 !important;" %>
-            <%= link_to "削除", stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-4 py-2 bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm shadow-lg hover:shadow-red-600/50 transition-all duration-300", style: "color: #ffffff !important;" %>
+            <%= link_to "詳細", stock_path(stock), class: "flex-1 px-4 py-3 bg-gray-600 text-white hover:bg-gray-500 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 48px !important; min-height: 48px !important; box-sizing: border-box !important;" %>
+            <%= link_to "編集", edit_stock_path(stock), class: "flex-1 px-4 py-3 bg-white text-black hover:bg-gray-100 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center appearance-none border-none", style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 20px !important; height: 48px !important; min-height: 48px !important; box-sizing: border-box !important;" %>
+            <%= link_to "削除", stock_path(stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "flex-1 px-4 py-3 bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 48px !important; min-height: 48px !important; box-sizing: border-box !important;" %>
           </div>
         </div>
       <% end %>

@@ -61,7 +61,7 @@
 
     <div>
       <%= f.label :impression, class: "block text-lg font-bold text-gray-300 mb-2" do %>
-        読書メモ（任意）
+        備忘録（任意）
       <% end %>
       <%= f.text_area :impression, class: "w-full h-16 text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください（400文字以内）", maxlength: 400 %>
     </div>
@@ -80,7 +80,7 @@
       <%# 登録・更新ボタン: 背景白、文字黒、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
       <%= f.submit @stock.new_record? ? "登録" : "更新", 
           id: "submit-button",
-          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none", 
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none border-none", 
           style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
 
       <%# キャンセルボタン: 背景をより目立つグレーに変更（gray-600）、文字白、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
@@ -92,7 +92,7 @@
       <% unless @stock.new_record? %>
         <%= link_to "削除", stock_path(@stock), 
             data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
-            class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-gray-600 text-white font-bold text-xl rounded-lg hover:bg-red-600 transition-colors duration-200 flex items-center justify-center", 
+            class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-red-600 text-white font-bold text-xl rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center", 
             style: "font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
       <% end %>
     </div>

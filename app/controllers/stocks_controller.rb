@@ -29,7 +29,7 @@ class StocksController < ApplicationController
     @stock = current_user.stocks.build(stock_params)
     @categories = Category.all
     if @stock.save
-      redirect_to stocks_path, success: I18n.t("controllers.stocks.created")
+      redirect_to root_path, success: I18n.t("controllers.stocks.created")
     else
       flash.now[:danger] = I18n.t("controllers.stocks.create_failed")
       render :new, status: :unprocessable_content

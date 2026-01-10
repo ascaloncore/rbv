@@ -14,6 +14,18 @@ class StaticPagesController < ApplicationController
     @reading_value = current_user.stocks.where(status: :reading).sum(:book_value) || 0
     @reading_count = current_user.stocks.where(status: :reading).count
 
+    # 滞留在庫内訳
+    @stagnant_value = current_user.stocks.where(status: :stagnant).sum(:book_value) || 0
+    @stagnant_count = current_user.stocks.where(status: :stagnant).count
+
+    # 不良在庫内訳
+    @suspended_value = current_user.stocks.where(status: :suspended).sum(:book_value) || 0
+    @suspended_count = current_user.stocks.where(status: :suspended).count
+
+    # 減損損失内訳
+    @impaired_value = current_user.stocks.where(status: :impaired).sum(:book_value) || 0
+    @impaired_count = current_user.stocks.where(status: :impaired).count
+
     # 知識資産の詳細
     @completed_count = current_user.stocks.where(status: :completed).count
   end

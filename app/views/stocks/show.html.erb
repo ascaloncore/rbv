@@ -1,10 +1,19 @@
 <div class="max-w-4xl mx-auto">
-  <div class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6">
-    <h1 class="text-3xl md:text-4xl font-bold text-[#FFFFFF]">在庫詳細</h1>
-    <div class="flex flex-wrap gap-2">
-      <%= link_to "編集", edit_stock_path(@stock), class: "px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 font-bold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all duration-300" %>
-      <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-6 py-3 bg-red-600 text-white hover:bg-red-700 rounded-lg shadow-lg hover:shadow-red-600/50 transition-all duration-300" %>
-      <%= link_to "一覧に戻る", stocks_path, class: "px-6 py-3 border border-gray-600 text-gray-300 hover:bg-gray-700 hover:text-white hover:border-gray-500 rounded-lg transition-all duration-300" %>
+  <style>
+    /* 編集ボタンのホバー・アクティブスタイル */
+    #edit-button:hover {
+      background-color: #e5e7eb !important; /* gray-200 */
+    }
+    #edit-button:active {
+      background-color: #d1d5db !important; /* gray-300 */
+    }
+  </style>
+  
+  <div class="flex justify-center mb-6">
+    <div class="flex flex-wrap gap-4 justify-center">
+      <%= link_to "編集", edit_stock_path(@stock), id: "edit-button", class: "px-8 py-4 bg-white text-black font-bold rounded-lg transition-colors duration-200 flex items-center justify-center appearance-none border-none", style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
+      <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-8 py-4 bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
+      <%= link_to "一覧に戻る", stocks_path, class: "px-8 py-4 bg-gray-600 text-white hover:bg-gray-500 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
     </div>
   </div>
 
@@ -52,7 +61,7 @@
 
       <% if @stock.impression.present? %>
         <div class="border-t border-gray-700 pt-6">
-          <h3 class="font-semibold text-lg mb-2 text-gray-300">読書メモ</h3>
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">備忘録</h3>
           <p class="break-words whitespace-pre-wrap text-gray-300 leading-relaxed"><%= @stock.impression %></p>
         </div>
       <% end %>
@@ -69,22 +78,22 @@
   </div>
 
   <div class="bg-gray-700 border border-gray-600 rounded-xl p-6 shadow-lg">
-    <h2 class="text-2xl font-bold mb-4 text-[#FFFFFF]">読書メモ</h2>
+    <h2 class="text-2xl font-bold mb-4 text-[#FFFFFF]">投稿メモ</h2>
 
-    <!-- 新規読書メモ入力フォーム -->
+    <!-- 投稿メモ入力フォーム -->
     <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
       <div class="mb-4">
         <%= f.label :body, class: "block text-sm font-medium text-gray-300 mb-2" do %>
-          新規読書メモの入力（400文字以内）
+          投稿メモの入力（400文字以内）
         <% end %>
         <%= f.text_area :body, class: "w-full h-24 bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください", required: true, maxlength: 400 %>
       </div>
       <div>
-        <%= f.submit "読書メモの登録", class: "px-6 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 font-bold rounded-lg shadow-lg hover:shadow-cyan-500/50 transition-all duration-300 cursor-pointer" %>
+        <%= f.submit "投稿メモの登録", class: "w-full px-8 py-4 bg-white text-black hover:bg-gray-100 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center appearance-none border-none cursor-pointer", style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
       </div>
     <% end %>
 
-    <!-- メモ一覧 -->
+    <!-- 投稿メモ一覧 -->
     <% if @stock.memos.any? %>
       <div class="space-y-4">
         <% @stock.memos.includes(:user).order(created_at: :desc).each do |memo| %>
