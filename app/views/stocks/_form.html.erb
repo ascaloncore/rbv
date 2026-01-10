@@ -17,24 +17,24 @@
     <% end %>
 
     <div>
-      <%= f.label :title, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :title, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         タイトル <span class="text-red-400">*</span>
       <% end %>
-      <%= f.text_field :title, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "学習資産のタイトルを入力してください", required: true %>
+      <%= f.text_field :title, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "学習資産のタイトルを入力してください", required: true %>
     </div>
 
     <div>
-      <%= f.label :category_id, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :category_id, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         カテゴリ <span class="text-red-400">*</span>
       <% end %>
-      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300", required: true } %>
+      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300", required: true } %>
     </div>
 
     <div>
-      <%= f.label :purchase_price, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :purchase_price, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         購入金額（円） <span class="text-red-400">*</span>
       <% end %>
-      <%= f.number_field :purchase_price, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "0", min: 0, step: 1, required: true %>
+      <%= f.number_field :purchase_price, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "0", min: 0, step: 1, required: true %>
       <% unless @stock.new_record? %>
         <div class="mt-2">
           <span class="text-xs text-[#64748B]">帳簿価額: <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
@@ -43,34 +43,57 @@
     </div>
 
     <div>
-      <%= f.label :purchase_date, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :purchase_date, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         購入日
       <% end %>
-      <%= f.date_field :purchase_date, class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" %>
+      <%= f.date_field :purchase_date, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" %>
     </div>
 
     <div>
-      <%= f.label :status, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :status, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         ステータス
       <% end %>
       <%= f.select :status, options_for_select(
         Stock.statuses.keys.map { |key| [I18n.t("activerecord.enums.stock.status.#{key}"), key] },
         @stock.status || "unread"
-      ), {}, { class: "w-full bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" } %>
+      ), {}, { class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" } %>
     </div>
 
     <div>
-      <%= f.label :impression, class: "block text-base font-medium text-gray-300 mb-2" do %>
+      <%= f.label :impression, class: "block text-lg font-bold text-gray-300 mb-2" do %>
         読書メモ（任意）
       <% end %>
-      <%= f.text_area :impression, class: "w-full h-16 bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください" %>
+      <%= f.text_area :impression, class: "w-full h-16 text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください（400文字以内）", maxlength: 400 %>
     </div>
 
     <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-700 mt-6">
-      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "flex-1 w-full px-8 py-3 !bg-white text-gray-900 font-bold rounded-lg shadow-[0_0_20px_rgba(255,255,255,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] hover:bg-gray-100 hover:scale-105 transition-all duration-300 cursor-pointer text-[25px] flex items-center justify-center appearance-none border-none" %>
-      <%= link_to "キャンセル", stocks_path, class: "flex-1 w-full px-8 py-3 bg-gray-600 text-white hover:bg-gray-500 rounded-lg transition-all duration-300 shadow-md flex items-center justify-center font-medium text-[25px]" %>
+      <style>
+        /* 登録ボタンのホバー・アクティブスタイル */
+        #submit-button:hover {
+          background-color: #e5e7eb !important; /* gray-200 */
+        }
+        #submit-button:active {
+          background-color: #d1d5db !important; /* gray-300 */
+        }
+      </style>
+      
+      <%# 登録・更新ボタン: 背景白、文字黒、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
+      <%= f.submit @stock.new_record? ? "登録" : "更新", 
+          id: "submit-button",
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none", 
+          style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+
+      <%# キャンセルボタン: 背景をより目立つグレーに変更（gray-600）、文字白、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
+      <%= link_to "キャンセル", stocks_path, 
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-gray-600 text-white font-bold text-xl rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center justify-center", 
+          style: "font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+
+      <%# 削除ボタン: 通常時はグレー、ホバー時に赤、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
       <% unless @stock.new_record? %>
-        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "flex-1 w-full px-8 py-3 bg-gray-600 text-white hover:bg-red-600 rounded-lg transition-all duration-300 shadow-md flex items-center justify-center font-medium text-[25px]" %>
+        <%= link_to "削除", stock_path(@stock), 
+            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+            class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-gray-600 text-white font-bold text-xl rounded-lg hover:bg-red-600 transition-colors duration-200 flex items-center justify-center", 
+            style: "font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
       <% end %>
     </div>
   <% end %>
