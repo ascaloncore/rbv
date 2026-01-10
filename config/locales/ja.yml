@@ -7,6 +7,7 @@ ja:
   controllers:
     application:
       require_login: "ログインが必要です"
+      record_not_found: "アクセス権限がありません。ログインしてください。"
     stocks:
       created: "在庫を登録しました。"
       create_failed: "登録に失敗しました。入力内容を確認してください。"

@@ -16,11 +16,18 @@ class ApplicationController < ActionController::Base
   # Custom flash types
   add_flash_types :success, :info, :warning, :danger
 
+  # 他のユーザーのリソースにアクセスしようとした場合の処理
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+
   private
 
   def require_login
     return if logged_in?
 
-    redirect_to login_path, alert: I18n.t("controllers.application.require_login")
+    redirect_to login_path
+  end
+
+  def handle_record_not_found
+    redirect_to login_path, danger: I18n.t("controllers.application.record_not_found")
   end
 end

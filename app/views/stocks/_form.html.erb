@@ -1,77 +1,106 @@
-<%= form_with model: @stock, local: true, class: "space-y-4" do |f| %>
-  <% if @stock.errors.any? %>
-    <div class="alert alert-error">
-      <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-      </svg>
-      <div>
-        <h3 class="font-bold">エラーがあります</h3>
-        <ul class="list-disc list-inside">
-          <% @stock.errors.full_messages.each do |message| %>
-            <li><%= message %></li>
-          <% end %>
-        </ul>
+<div class="max-w-2xl mx-auto">
+  <%= form_with model: @stock, local: true, class: "bg-gray-700 border border-gray-600 rounded-xl shadow-lg p-6 md:p-8 space-y-6" do |f| %>
+    <% if @stock.errors.any? %>
+      <div class="bg-[#450A0A] text-[#FECACA] border border-[#EF4444] rounded-lg p-4 flex items-start space-x-3">
+        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <div>
+          <h3 class="font-bold mb-2">エラーがあります</h3>
+          <ul class="list-disc list-inside space-y-1">
+            <% @stock.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
       </div>
+    <% end %>
+
+    <div>
+      <%= f.label :title, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        タイトル <span class="text-red-400">*</span>
+      <% end %>
+      <%= f.text_field :title, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "学習資産のタイトルを入力してください", required: true %>
     </div>
-  <% end %>
 
-  <div class="form-control">
-    <%= f.label :title, class: "label" do %>
-      <span class="label-text">タイトル <span class="text-error">*</span></span>
-    <% end %>
-    <%= f.text_field :title, class: "input input-bordered w-full", placeholder: "学習資産のタイトルを入力してください", required: true %>
-  </div>
+    <div>
+      <%= f.label :category_id, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        カテゴリ <span class="text-red-400">*</span>
+      <% end %>
+      <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300", required: true } %>
+    </div>
 
-  <div class="form-control">
-    <%= f.label :category_id, class: "label" do %>
-      <span class="label-text">カテゴリ <span class="text-error">*</span></span>
-    <% end %>
-    <%= f.collection_select :category_id, @categories, :id, :name, { prompt: "カテゴリを選択してください" }, { class: "select select-bordered w-full", required: true } %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :purchase_price, class: "label" do %>
-      <span class="label-text">購入金額（円） <span class="text-error">*</span></span>
-    <% end %>
-    <%= f.number_field :purchase_price, class: "input input-bordered w-full", placeholder: "0", min: 0, step: 1, required: true %>
-    <% unless @stock.new_record? %>
-      <div class="label">
-        <span class="label-text-alt text-gray-500">帳簿価額: <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
-      </div>
-    <% end %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :purchase_date, class: "label" do %>
-      <span class="label-text">購入日</span>
-    <% end %>
-    <%= f.date_field :purchase_date, class: "input input-bordered w-full" %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :status, class: "label" do %>
-      <span class="label-text">ステータス</span>
-    <% end %>
-    <%= f.select :status, options_for_select(
-      Stock.statuses.keys.map { |key| [I18n.t("activerecord.enums.stock.status.#{key}"), key] },
-      @stock.status || "unread"
-    ), {}, { class: "select select-bordered w-full" } %>
-  </div>
-
-  <div class="form-control">
-    <%= f.label :impression, class: "label" do %>
-      <span class="label-text">感想・メモ</span>
-    <% end %>
-    <%= f.text_area :impression, class: "textarea textarea-bordered w-full h-32", placeholder: "感想やメモを入力してください" %>
-  </div>
-
-  <div class="form-control mt-6">
-    <div class="flex gap-4">
-      <%= f.submit @stock.new_record? ? "登録" : "更新", class: "btn btn-primary flex-1" %>
-      <%= link_to "キャンセル", stocks_path, class: "btn btn-outline flex-1" %>
+    <div>
+      <%= f.label :purchase_price, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        購入金額（円） <span class="text-red-400">*</span>
+      <% end %>
+      <%= f.number_field :purchase_price, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300 placeholder:text-gray-400", placeholder: "0", min: 0, step: 1, required: true %>
       <% unless @stock.new_record? %>
-        <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-error flex-1" %>
+        <div class="mt-2">
+          <span class="text-xs text-[#64748B]">帳簿価額: <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %></span>
+        </div>
       <% end %>
     </div>
-  </div>
-<% end %>
+
+    <div>
+      <%= f.label :purchase_date, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        購入日
+      <% end %>
+      <%= f.date_field :purchase_date, class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" %>
+    </div>
+
+    <div>
+      <%= f.label :status, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        ステータス
+      <% end %>
+      <%= f.select :status, options_for_select(
+        Stock.statuses.keys.map { |key| [I18n.t("activerecord.enums.stock.status.#{key}"), key] },
+        @stock.status || "unread"
+      ), {}, { class: "w-full text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none transition-all duration-300" } %>
+    </div>
+
+    <div>
+      <%= f.label :impression, class: "block text-lg font-bold text-gray-300 mb-2" do %>
+        備忘録（任意）
+      <% end %>
+      <%= f.text_area :impression, class: "w-full h-16 text-xl bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください（400文字以内）", maxlength: 400 %>
+    </div>
+
+    <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-700 mt-6">
+      <style>
+        /* 登録・更新ボタンのホバー・アクティブスタイル */
+        #submit-button {
+          background-color: #ffffff !important;
+        }
+        #submit-button:hover {
+          background-color: #e5e7eb !important; /* gray-200 */
+        }
+        #submit-button:active {
+          background-color: #d1d5db !important; /* gray-300 */
+        }
+        #submit-button:hover:focus {
+          background-color: #e5e7eb !important; /* gray-200 */
+        }
+      </style>
+      
+      <%# 登録・更新ボタン: 背景白、文字黒、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
+      <%= f.submit @stock.new_record? ? "登録" : "更新", 
+          id: "submit-button",
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none border-none submit-button-hover", 
+          style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+
+      <%# キャンセルボタン: 背景をより目立つグレーに変更（gray-600）、文字白、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
+      <%= link_to "キャンセル", stocks_path, 
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-gray-600 text-white font-bold text-xl rounded-lg hover:bg-gray-500 transition-colors duration-200 flex items-center justify-center", 
+          style: "font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+
+      <%# 削除ボタン: 通常時はグレー、ホバー時に赤、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
+      <% unless @stock.new_record? %>
+        <%= link_to "削除", stock_path(@stock), 
+            data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, 
+            class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-red-600 text-white font-bold text-xl rounded-lg hover:bg-red-700 transition-colors duration-200 flex items-center justify-center", 
+            style: "font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

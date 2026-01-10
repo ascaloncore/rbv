@@ -1,53 +1,64 @@
-<div class="max-w-md mx-auto">
-  <h1 class="text-3xl font-bold mb-6">ユーザー登録</h1>
-
-  <%= form_with model: @user, url: users_path, local: true, class: "space-y-4" do |f| %>
-    <% if @user.errors.any? %>
-      <div class="alert alert-error">
-        <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
-<div>
-          <h3 class="font-bold">エラーがあります</h3>
-          <ul class="list-disc list-inside">
-            <% @user.errors.full_messages.each do |message| %>
-              <li><%= message %></li>
-            <% end %>
-          </ul>
+<div class="min-h-[calc(100vh-200px)] flex items-center justify-center px-4">
+  <div class="w-full max-w-2xl">
+    <div class="bg-[#4B5563] border-2 border-gray-400 rounded-3xl p-12 shadow-2xl">
+      
+      <%= form_with model: @user, url: users_path, local: true, class: "space-y-12" do |f| %>
+        <% if @user.errors.any? %>
+          <div class="bg-[#FF2D55] text-white shadow-[0_0_15px_rgba(255,45,85,0.5)] rounded-xl p-4 mb-4 flex items-start space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <h3 class="font-bold mb-2">エラーがあります</h3>
+              <ul class="list-disc list-inside space-y-1">
+                <% @user.errors.full_messages.each do |message| %>
+                  <li><%= message %></li>
+                <% end %>
+              </ul>
+            </div>
+          </div>
+        <% end %>
+        
+        <div>
+          <%= f.label :name, "ユーザー名", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.text_field :name, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "ユーザー名を入力してください", required: true %>
         </div>
-      </div>
-    <% end %>
 
-    <div class="form-control">
-      <%= f.label :name, class: "label" do %>
-        <span class="label-text">名前</span>
+        <div>
+          <%= f.label :email, "メールアドレス", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.email_field :email, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "example@email.com", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :password, "パスワード", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.password_field :password, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "8文字以上", required: true %>
+        </div>
+
+        <div>
+          <%= f.label :password_confirmation, "パスワード（確認）", class: "block text-2xl font-bold text-white mb-4" %>
+          <%= f.password_field :password_confirmation, 
+              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+              placeholder: "パスワードを再入力してください", required: true %>
+        </div>
+
+        <div class="pt-4">
+          <%= f.submit "登録", 
+              class: "appearance-none block w-full h-16 bg-white hover:bg-gray-100 text-black font-black text-3xl rounded-2xl shadow-xl hover:shadow-2xl cursor-pointer transition-transform active:scale-95 border-none flex items-center justify-center",
+              style: "font-size: 25px !important;background-color: #ffffff !important; color: #000000 !important; height: 64px !important;" %>
+        </div>
       <% end %>
-      <%= f.text_field :name, class: "input input-bordered w-full", placeholder: "名前を入力してください" %>
     </div>
 
-    <div class="form-control">
-      <%= f.label :email, class: "label" do %>
-        <span class="label-text">メールアドレス</span>
-      <% end %>
-      <%= f.email_field :email, class: "input input-bordered w-full", placeholder: "example@email.com" %>
+    <div class="mt-12 text-center">
+      <p class="text-gray-300 text-xl mb-3">アカウントをお持ちの方は</p>
+      <%= link_to "ログインはこちら", login_path, class: "inline-block text-[#00F0FF] font-bold text-2xl border-b-4 border-[#00F0FF] hover:text-white hover:border-white transition-colors pb-1" %>
     </div>
 
-    <div class="form-control">
-      <%= f.label :password, class: "label" do %>
-        <span class="label-text">パスワード</span>
-      <% end %>
-      <%= f.password_field :password, class: "input input-bordered w-full", placeholder: "8文字以上" %>
-    </div>
-
-    <div class="form-control">
-      <%= f.label :password_confirmation, class: "label" do %>
-        <span class="label-text">パスワード（確認）</span>
-      <% end %>
-      <%= f.password_field :password_confirmation, class: "input input-bordered w-full", placeholder: "パスワードを再入力してください" %>
-    </div>
-
-    <div class="form-control mt-6">
-      <%= f.submit "登録", class: "btn btn-primary w-full" %>
-    </div>
-  <% end %>
+  </div>
 </div>

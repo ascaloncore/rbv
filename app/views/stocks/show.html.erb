@@ -1,74 +1,76 @@
 <div class="max-w-4xl mx-auto">
-  <div class="flex justify-between items-center mb-6">
-    <h1 class="text-3xl font-bold">在庫詳細</h1>
-    <div class="flex gap-2">
-      <%= link_to "編集", edit_stock_path(@stock), class: "btn btn-primary" %>
-      <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-error" %>
-      <%= link_to "一覧に戻る", stocks_path, class: "btn btn-outline" %>
+  <style>
+    /* 編集ボタンのホバー・アクティブスタイル */
+    #edit-button:hover {
+      background-color: #e5e7eb !important; /* gray-200 */
+    }
+    #edit-button:active {
+      background-color: #d1d5db !important; /* gray-300 */
+    }
+    #edit-button:hover:focus {
+      background-color: #e5e7eb !important; /* gray-200 */
+    }
+  </style>
+  
+  <div class="flex justify-center mb-6">
+    <div class="flex flex-wrap gap-4 justify-center">
+      <%= link_to "編集", edit_stock_path(@stock), id: "edit-button", class: "px-8 py-4 bg-white text-black font-bold rounded-lg transition-colors duration-200 flex items-center justify-center appearance-none border-none", style: "color: #000000 !important; font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
+      <%= link_to "削除", stock_path(@stock), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-8 py-4 bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
+      <%= link_to "一覧に戻る", stocks_path, class: "px-8 py-4 bg-gray-600 text-white hover:bg-gray-500 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center", style: "font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important; min-width: 200px !important;" %>
     </div>
   </div>
 
-  <div class="card bg-base-100 shadow-xl">
-    <div class="card-body">
-      <div class="space-y-6">
+  <div class="bg-gray-700 border border-gray-600 rounded-xl p-6 shadow-lg mb-6">
+    <div class="space-y-6">
+      <div>
+        <h2 class="text-2xl md:text-3xl font-bold mb-3 break-words overflow-hidden text-[#FFFFFF]"><%= @stock.title %></h2>
+        <div class="flex flex-wrap gap-2 mt-3">
+          <span class="inline-block px-3 py-1 bg-gray-800 border border-gray-600 rounded text-gray-300 text-sm"><%= @stock.category.name %></span>
+          <span class="inline-block px-3 py-1 rounded text-sm <%= status_badge_class(@stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{@stock.status}") %></span>
+        </div>
+      </div>
+
+      <div class="border-t border-gray-700 pt-6"></div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-          <h2 class="text-2xl font-bold mb-2 break-words overflow-hidden"><%= @stock.title %></h2>
-          <div class="flex gap-2 mt-2">
-            <span class="badge badge-outline"><%= @stock.category.name %></span>
-            <span class="badge <%= status_badge_class(@stock.status) %>"><%= I18n.t("activerecord.enums.stock.status.#{@stock.status}") %></span>
-          </div>
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">購入金額</h3>
+          <p class="text-xl text-[#FFFFFF]">
+            <%= number_to_currency(@stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %>
+          </p>
         </div>
 
-        <div class="divider"></div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <h3 class="font-semibold text-lg mb-2">購入金額</h3>
-            <p class="text-xl">
-              <% if @stock.purchase_price %>
-                <%= number_to_currency(@stock.purchase_price, unit: "¥", format: "%u %n", precision: 0) %>
-              <% else %>
-                <span class="text-gray-500">未設定</span>
-              <% end %>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-semibold text-lg mb-2">帳簿価額</h3>
-            <p class="text-xl">
-              <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-semibold text-lg mb-2">購入日</h3>
-            <p class="text-xl">
-              <% if @stock.purchase_date %>
-                <%= @stock.purchase_date.strftime("%Y年%m月%d日") %>
-              <% else %>
-                <span class="text-gray-500">未設定</span>
-              <% end %>
-            </p>
-          </div>
-
-          <div>
-            <h3 class="font-semibold text-lg mb-2">減損損失</h3>
-            <p class="text-xl text-error">
-              <%= number_to_currency(@stock.impairment_loss || 0, unit: "¥", format: "%u %n", precision: 0) %>
-            </p>
-          </div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">帳簿価額</h3>
+          <p class="text-xl text-[#FFFFFF]">
+            <%= number_to_currency(@stock.book_value || 0, unit: "¥", format: "%u %n", precision: 0) %>
+          </p>
         </div>
 
-        <% if @stock.impression.present? %>
-          <div>
-            <h3 class="font-semibold text-lg mb-2">感想・メモ</h3>
-            <p class="break-words whitespace-pre-wrap"><%= @stock.impression %></p>
-          </div>
-        <% end %>
+        <div>
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">購入日</h3>
+          <p class="text-xl text-[#FFFFFF]">
+            <%= @stock.purchase_date ? @stock.purchase_date.strftime("%Y年%m月%d日") : "未設定" %>
+          </p>
+        </div>
 
-        <div class="divider"></div>
+        <div>
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">減損損失</h3>
+          <p class="text-xl text-[#EF4444]">
+            <%= number_to_currency(@stock.impairment_loss || 0, unit: "¥", format: "%u %n", precision: 0) %>
+          </p>
+        </div>
+      </div>
 
-        <div class="text-sm text-gray-500">
+      <% if @stock.impression.present? %>
+        <div class="border-t border-gray-700 pt-6">
+          <h3 class="font-semibold text-lg mb-2 text-gray-300">備忘録</h3>
+          <p class="break-words whitespace-pre-wrap text-gray-300 leading-relaxed"><%= @stock.impression %></p>
+        </div>
+      <% end %>
+
+      <div class="border-t border-gray-700 pt-6">
+        <div class="text-sm text-gray-400">
           <p>登録日: <%= @stock.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
           <% if @stock.updated_at != @stock.created_at %>
             <p>更新日: <%= @stock.updated_at.strftime("%Y年%m月%d日 %H:%M") %></p>
@@ -78,42 +80,40 @@
     </div>
   </div>
 
-  <div class="card bg-base-100 shadow-xl mt-6">
-    <div class="card-body">
-      <h2 class="text-2xl font-bold mb-4">読書メモ</h2>
+  <div class="bg-gray-700 border border-gray-600 rounded-xl p-6 shadow-lg">
+    <h2 class="text-2xl font-bold mb-4 text-[#FFFFFF]">投稿メモ</h2>
 
-      <!-- 新規投稿フォーム -->
-      <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
-        <div class="form-control">
-          <%= f.label :body, class: "label" do %>
-            <span class="label-text">メモを入力（400文字以内）</span>
-          <% end %>
-          <%= f.text_area :body, class: "textarea textarea-bordered w-full h-24", placeholder: "読書メモを入力してください", required: true, maxlength: 400 %>
-        </div>
-        <div class="form-control mt-2">
-          <%= f.submit "投稿", class: "btn btn-primary" %>
-        </div>
-      <% end %>
+    <!-- 投稿メモ入力フォーム -->
+    <%= form_with model: [@stock, @stock.memos.build], local: true, class: "mb-6" do |f| %>
+      <div class="mb-4">
+        <%= f.label :body, class: "block text-sm font-medium text-gray-300 mb-2" do %>
+          投稿メモの入力（400文字以内）
+        <% end %>
+        <%= f.text_area :body, class: "w-full h-24 bg-gray-800 border border-gray-600 text-white rounded-lg p-3 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-500/50 outline-none resize-none transition-all duration-300 placeholder:text-gray-400", placeholder: "読書メモを入力してください", required: true, maxlength: 400 %>
+      </div>
+      <div>
+        <%= f.submit "投稿メモの登録", class: "w-full px-8 py-4 bg-white text-black hover:bg-gray-100 font-bold rounded-lg transition-colors duration-200 flex items-center justify-center appearance-none border-none cursor-pointer", style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 20px !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
+      </div>
+    <% end %>
 
-      <!-- メモ一覧 -->
-      <% if @stock.memos.any? %>
-        <div class="space-y-4">
-          <% @stock.memos.includes(:user).order(created_at: :desc).each do |memo| %>
-            <div class="border-b border-gray-200 pb-4 last:border-b-0">
-              <div class="flex justify-between items-start mb-2">
-                <div>
-                  <p class="font-semibold"><%= memo.user.name %></p>
-                  <p class="text-sm text-gray-500"><%= memo.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
-                </div>
-                <% if memo.user == current_user %>
-                  <%= link_to "削除", stock_memo_path(@stock, memo), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-sm btn-error" %>
-                <% end %>
+    <!-- 投稿メモ一覧 -->
+    <% if @stock.memos.any? %>
+      <div class="space-y-4">
+        <% @stock.memos.includes(:user).order(created_at: :desc).each do |memo| %>
+          <div class="border-b border-gray-700 pb-4 last:border-b-0">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <p class="font-semibold text-white"><%= memo.user.name %></p>
+                <p class="text-sm text-gray-400"><%= memo.created_at.strftime("%Y年%m月%d日 %H:%M") %></p>
               </div>
-              <p class="break-words whitespace-pre-wrap"><%= memo.body %></p>
+              <% if memo.user == current_user %>
+                <%= link_to "削除", stock_memo_path(@stock, memo), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "px-3 py-1 bg-red-600 text-white hover:bg-red-700 rounded text-sm shadow-lg hover:shadow-red-600/50 transition-all duration-300" %>
+              <% end %>
             </div>
-          <% end %>
-        </div>
-      <% end %>
-    </div>
+            <p class="break-words whitespace-pre-wrap text-gray-300 leading-relaxed"><%= memo.body %></p>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

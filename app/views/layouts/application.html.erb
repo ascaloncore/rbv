@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="ja" data-theme="light">
+<html lang="ja">
   <head>
-    <title><%= content_for(:title) || "Rbv" %></title>
+    <title><%= content_for(:title) || "RBV - Reading Book Value" %></title>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Rbv">
+    <meta name="application-name" content="RBV">
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -23,15 +23,15 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body class="bg-black text-[#FFFFFF] font-sans antialiased min-h-screen">
     <%= render "shared/header" %>
 
-    <div class="container mx-auto px-5 py-5">
+    <div class="container mx-auto px-4 md:px-6 lg:px-8 py-6 md:py-8">
       <%= render "shared/flash_message" %>
 
       <main>
-      <%= yield %>
-    </main>
+        <%= yield %>
+      </main>
     </div>
   </body>
 </html>
