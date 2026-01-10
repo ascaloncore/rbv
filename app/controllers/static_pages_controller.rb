@@ -4,29 +4,37 @@ class StaticPagesController < ApplicationController
   before_action :require_login
 
   def top
-    @total_inventory_value = current_user.stocks.total_inventory_value
-    @total_knowledge_asset_value = current_user.stocks.total_knowledge_asset_value
-    @total_impairment_loss = current_user.stocks.total_impairment_loss
+    load_total_values
+    load_status_breakdowns
+    load_completed_count
+  end
 
-    # 適正在庫内訳
-    @unread_value = current_user.stocks.where(status: :unread).sum(:book_value) || 0
-    @unread_count = current_user.stocks.where(status: :unread).count
-    @reading_value = current_user.stocks.where(status: :reading).sum(:book_value) || 0
-    @reading_count = current_user.stocks.where(status: :reading).count
+  private
 
-    # 滞留在庫内訳
-    @stagnant_value = current_user.stocks.where(status: :stagnant).sum(:book_value) || 0
-    @stagnant_count = current_user.stocks.where(status: :stagnant).count
+  def load_total_values
+    stocks = current_user.stocks
+    @total_inventory_value = stocks.total_inventory_value
+    @total_knowledge_asset_value = stocks.total_knowledge_asset_value
+    @total_impairment_loss = stocks.total_impairment_loss
+  end
 
-    # 不良在庫内訳
-    @suspended_value = current_user.stocks.where(status: :suspended).sum(:book_value) || 0
-    @suspended_count = current_user.stocks.where(status: :suspended).count
+  def load_status_breakdowns
+    stocks = current_user.stocks
+    @unread_value, @unread_count = status_value_and_count(stocks, :unread)
+    @reading_value, @reading_count = status_value_and_count(stocks, :reading)
+    @stagnant_value, @stagnant_count = status_value_and_count(stocks, :stagnant)
+    @suspended_value, @suspended_count = status_value_and_count(stocks, :suspended)
+    @impaired_value, @impaired_count = status_value_and_count(stocks, :impaired)
+  end
 
-    # 減損損失内訳
-    @impaired_value = current_user.stocks.where(status: :impaired).sum(:book_value) || 0
-    @impaired_count = current_user.stocks.where(status: :impaired).count
-
-    # 知識資産の詳細
+  def load_completed_count
     @completed_count = current_user.stocks.where(status: :completed).count
+  end
+
+  def status_value_and_count(stocks, status)
+    status_stocks = stocks.where(status: status)
+    value = status_stocks.sum(:book_value) || 0
+    count = status_stocks.count
+    [value, count]
   end
 end
