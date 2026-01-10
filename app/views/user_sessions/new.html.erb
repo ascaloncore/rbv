@@ -1,37 +1,74 @@
-<div class="min-h-[calc(100vh-200px)] flex items-center justify-center px-4">
-  <div class="w-full max-w-2xl">
-    <div class="bg-[#4B5563] border-2 border-gray-400 rounded-3xl p-12 shadow-2xl">
+<div class="min-h-[calc(100vh-200px)] flex flex-col md:flex-row">
+  <!-- 左側: ブランディングセクション -->
+  <div class="md:w-1/2 bg-black text-white p-8 md:p-12 flex flex-col justify-between relative overflow-hidden min-h-[400px]">
+    <!-- 背景装飾 -->
+    <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 bg-emerald-500 rounded-full blur-3xl opacity-10"></div>
+    <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 bg-cyan-500 rounded-full blur-3xl opacity-10"></div>
+    
+    <!-- メインコンテンツ -->
+    <div class="relative z-10">
+      <!-- RBVロゴとタイトル -->
+      <div class="flex items-center gap-2 mb-8">
+        <%= image_tag "rbv-top-image.png", alt: "RBV", class: "h-12 w-auto" %>
+      </div>
       
-      <%= form_with url: login_path, local: true, class: "space-y-12" do |f| %>
-        
-        <div>
-          <%= f.label :email, "メールアドレス", class: "block text-2xl font-bold text-white mb-4" %>
-          <%= f.email_field :email, 
-              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
-              placeholder: "example@email.com", required: true %>
+      <!-- キャッチコピー -->
+      <p class="text-lg md:text-5xl font-bold leading-tight mb-6">
+        知識にならない資産は、<br>
+        ただの<span class="text-red-400 border-b-4 border-red-400 !font-extrabold">不良在庫</span>だ。
+      </p>
+      
+      <!-- サービス説明 -->
+      <p class="text-white text-lg leading-relaxed mb-8">
+        学習時間ではなく「埋没費用（赤字）」を管理する。<br>
+        積読を知識資産に変える、経営戦略的学習管理アプリ。
+      </p>
+    </div>
+    <div class="relative z-10 mt-8">
+      <div class="flex items-center gap-4 text-sm text-slate-400">
+        <div class="flex -space-x-2">
+          <div class="w-8 h-8 rounded-full bg-slate-700 border-2 border-slate-900"></div>
+          <div class="w-8 h-8 rounded-full bg-slate-600 border-2 border-slate-900"></div>
+          <div class="w-8 h-8 rounded-full bg-slate-500 border-2 border-slate-900"></div>
         </div>
-
-        <div>
-          <div class="flex justify-between items-center mb-4">
-            <%= f.label :password, "パスワード", class: "block text-2xl font-bold text-white" %>
+        <p>多くのエンジニアが資産化を開始しています</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 右側: ログインフォーム -->
+  <div class="md:w-1/2 p-8 md:p-12 bg-black flex flex-col justify-center">
+    <div class="w-full max-w-md mx-auto">
+      <div class="bg-[#4B5563] border-2 border-gray-400 rounded-3xl p-12 shadow-2xl">
+        <%= form_with url: login_path, local: true, class: "space-y-12" do |f| %>
+          <div>
+            <%= f.label :email, "メールアドレス", class: "block text-xl font-bold text-white mb-4" %>
+            <%= f.email_field :email, 
+                class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+                placeholder: "example@email.com", required: true %>
           </div>
-          <%= f.password_field :password, 
-              class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
-              placeholder: "パスワード", required: true %>
-        </div>
 
-        <div class="pt-4">
-          <%= f.submit "ログイン", 
-              class: "appearance-none block w-full h-16 bg-white hover:bg-gray-100 text-black font-black text-3xl rounded-2xl shadow-xl hover:shadow-2xl cursor-pointer transition-transform active:scale-95 border-none flex items-center justify-center",
-              style: "background-color: #ffffff !important; color: #000000 !important; height: 64px !important;font-size: 25px !important;" %>
-        </div>
-      <% end %>
+          <div>
+            <div class="flex justify-between items-center mb-4">
+              <%= f.label :password, "パスワード", class: "block text-xl font-bold text-white" %>
+            </div>
+            <%= f.password_field :password, 
+                class: "w-full bg-[#1F2937] border-2 border-gray-300 text-white text-3xl rounded-2xl p-6 focus:border-[#00F0FF] focus:ring-4 focus:ring-[#00F0FF]/50 outline-none placeholder:text-gray-500", 
+                placeholder: "パスワード", required: true %>
+          </div>
+
+          <div class="pt-4">
+            <%= f.submit "ログイン", 
+                class: "appearance-none block w-full h-16 bg-white hover:bg-gray-100 text-black text-xl rounded-2xl font-bold shadow-xl hover:shadow-2xl cursor-pointer transition-transform active:scale-95 border-none flex items-center justify-center",
+                style: "background-color: #ffffff !important; color: #000000 !important; height: 64px !important;font-size: 18px !important; font-weight: 700 !important;" %>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="mt-12 text-center">
+        <p class="text-gray-300 text-xl mb-3">アカウントのない方</p>
+        <%= link_to "新規登録はこちら", new_user_path, class: "inline-block text-[#00F0FF] font-bold text-xl border-b-4 border-[#00F0FF] hover:text-white hover:border-white transition-colors pb-1" %>
+      </div>
     </div>
-
-    <div class="mt-12 text-center">
-      <p class="text-gray-300 text-xl mb-3">アカウントをお持ちでない方は</p>
-      <%= link_to "新規登録はこちら", new_user_path, class: "inline-block text-[#00F0FF] font-bold text-2xl border-b-4 border-[#00F0FF] hover:text-white hover:border-white transition-colors pb-1" %>
-    </div>
-
   </div>
 </div>

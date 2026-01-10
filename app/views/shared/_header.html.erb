@@ -1,34 +1,110 @@
-<nav class="bg-black border-b border-gray-800 sticky top-0 z-50 py-3 shadow-lg">
+<nav class="bg-black border-b border-gray-800 sticky top-0 z-50 py-2 md:py-3 shadow-lg">
   <div class="container mx-auto px-4 md:px-6 lg:px-8">
     <div class="flex items-center justify-between">
-      <div class="flex items-center">
+      <!-- ロゴ -->
+      <div class="flex items-center flex-shrink-0">
         <%= link_to root_path, class: "flex items-center space-x-2 group" do %>
-          <%= image_tag "rbv-icon.png", alt: "RBV", class: "h-24 w-auto object-contain group-hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all", style: "height: 86px;" %>
-          <span class="text-2xl md:text-3xl font-bold text-[#00F0FF] hidden md:inline drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]">
+          <%= image_tag "rbv-icon.png", alt: "RBV", class: "h-12 md:h-20 w-auto object-contain group-hover:drop-shadow-[0_0_8px_rgba(0,240,255,0.5)] transition-all", style: "height: 48px; max-height: 48px;" %>
+          <span class="text-lg md:text-2xl lg:text-3xl font-bold text-[#00F0FF] hidden sm:inline drop-shadow-[0_0_8px_rgba(34,211,238,0.3)]">
             READING BOOK VALUE
           </span>
         <% end %>
       </div>
-      <div class="flex items-center space-x-2">
+
+      <!-- デスクトップ用ナビゲーション -->
+      <div class="hidden lg:flex items-center space-x-2">
         <% if logged_in? %>
-          <%= link_to new_stock_path, class: "flex flex-col items-center px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium" do %>
-            <%= image_tag "rbv-inventory-registration.jpg", alt: "在庫登録", class: "h-20 w-auto object-contain mb-1", style: "height: 72px;" %>
+          <%= link_to new_stock_path, class: "flex flex-col items-center px-2 xl:px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium text-sm xl:text-base" do %>
+            <%= image_tag "rbv-inventory-registration.jpg", alt: "在庫登録", class: "h-12 xl:h-16 w-auto object-contain mb-1" %>
             <span>在庫登録</span>
           <% end %>
-          <%= link_to stocks_path, class: "flex flex-col items-center px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium" do %>
-            <%= image_tag "rbv-inventory-items.png", alt: "在庫一覧", class: "h-20 w-auto object-contain mb-1", style: "height: 72px;" %>
+          <%= link_to stocks_path, class: "flex flex-col items-center px-2 xl:px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium text-sm xl:text-base" do %>
+            <%= image_tag "rbv-inventory-items.png", alt: "在庫一覧", class: "h-12 xl:h-16 w-auto object-contain mb-1" %>
             <span>在庫一覧</span>
           <% end %>
-          <%= link_to impairments_path, class: "flex flex-col items-center px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium" do %>
-            <%= image_tag "rbv-impairment-process.png", alt: "減損処理", class: "h-20 w-auto object-contain mb-1", style: "height: 72px;" %>
+          <%= link_to impairments_path, class: "flex flex-col items-center px-2 xl:px-4 py-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium text-sm xl:text-base" do %>
+            <%= image_tag "rbv-impairment-process.png", alt: "減損処理", class: "h-12 xl:h-16 w-auto object-contain mb-1" %>
             <span>減損処理</span>
           <% end %>
-          <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "px-4 py-2 text-red-300 hover:text-red-400 hover:drop-shadow-[0_0_12px_rgba(239,68,68,0.6)] transition-all duration-300 font-medium" %>
+          <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "px-3 xl:px-4 py-2 text-sm xl:text-base text-red-300 hover:text-red-400 hover:drop-shadow-[0_0_12px_rgba(239,68,68,0.6)] transition-all duration-300 font-medium" %>
         <% else %>
-          <%= link_to "ユーザー登録", new_user_path, class: "px-4 py-2 text-lg md:text-xl font-bold text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300" %>
-          <%= link_to "ログイン", login_path, class: "px-4 py-3 text-lg md:text-xl font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all duration-300" %>
+          <%= link_to "ユーザー登録", new_user_path, class: "px-3 xl:px-4 py-2 text-base xl:text-lg font-bold text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300" %>
+          <%= link_to "ログイン", login_path, class: "px-3 xl:px-4 py-3 text-base xl:text-lg font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] hover:scale-105 transition-all duration-300" %>
+        <% end %>
+      </div>
+
+      <!-- モバイル用ハンバーガーメニューボタン -->
+      <button id="mobile-menu-button" class="lg:hidden flex items-center justify-center p-2 text-cyan-50 hover:text-cyan-300 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300" aria-label="メニューを開く">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+    </div>
+
+    <!-- モバイル用ナビゲーションメニュー -->
+    <div id="mobile-menu" class="hidden lg:hidden mt-4 pb-4 border-t border-gray-800">
+      <div class="flex flex-col space-y-3 pt-4">
+        <% if logged_in? %>
+          <%= link_to new_stock_path, class: "flex items-center px-4 py-3 text-cyan-50 hover:text-cyan-300 hover:bg-gray-900 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium rounded-lg" do %>
+            <span class="text-lg">在庫登録</span>
+          <% end %>
+          <%= link_to stocks_path, class: "flex items-center px-4 py-3 text-cyan-50 hover:text-cyan-300 hover:bg-gray-900 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium rounded-lg" do %>
+            <span class="text-lg">在庫一覧</span>
+          <% end %>
+          <%= link_to impairments_path, class: "flex items-center px-4 py-3 text-cyan-50 hover:text-cyan-300 hover:bg-gray-900 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 font-medium rounded-lg" do %>
+            <span class="text-lg">減損処理</span>
+          <% end %>
+          <%= link_to "ログアウト", logout_path, data: { turbo_method: :delete }, class: "px-4 py-3 text-lg text-red-300 hover:text-red-400 hover:bg-gray-900 hover:drop-shadow-[0_0_12px_rgba(239,68,68,0.6)] transition-all duration-300 font-medium rounded-lg" %>
+        <% else %>
+          <%= link_to "ユーザー登録", new_user_path, class: "px-4 py-3 text-lg font-bold text-cyan-50 hover:text-cyan-300 hover:bg-gray-900 hover:drop-shadow-[0_0_12px_rgba(34,211,238,0.6)] transition-all duration-300 rounded-lg" %>
+          <%= link_to "ログイン", login_path, class: "px-4 py-3 text-lg font-bold bg-gradient-to-r from-cyan-500 to-blue-600 text-white hover:from-cyan-400 hover:to-blue-500 rounded-lg shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_30px_rgba(6,182,212,0.6)] transition-all duration-300 text-center" %>
         <% end %>
       </div>
     </div>
   </div>
 </nav>
+
+<script>
+  // ハンバーガーメニューのトグル機能
+  document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    if (menuButton && mobileMenu) {
+      menuButton.addEventListener('click', function() {
+        mobileMenu.classList.toggle('hidden');
+        
+        // アイコンの変更（ハンバーガー ↔ ×）
+        const icon = menuButton.querySelector('svg path');
+        if (mobileMenu.classList.contains('hidden')) {
+          icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+          menuButton.setAttribute('aria-label', 'メニューを開く');
+        } else {
+          icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+          menuButton.setAttribute('aria-label', 'メニューを閉じる');
+        }
+      });
+    }
+
+    // Turboイベントに対応
+    document.addEventListener('turbo:load', function() {
+      const menuButton = document.getElementById('mobile-menu-button');
+      const mobileMenu = document.getElementById('mobile-menu');
+      
+      if (menuButton && mobileMenu) {
+        menuButton.addEventListener('click', function() {
+          mobileMenu.classList.toggle('hidden');
+          
+          const icon = menuButton.querySelector('svg path');
+          if (mobileMenu.classList.contains('hidden')) {
+            icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+            menuButton.setAttribute('aria-label', 'メニューを開く');
+          } else {
+            icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+            menuButton.setAttribute('aria-label', 'メニューを閉じる');
+          }
+        });
+      }
+    });
+  });
+</script>
