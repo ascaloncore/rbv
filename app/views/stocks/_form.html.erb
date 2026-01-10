@@ -68,19 +68,25 @@
 
     <div class="flex flex-col md:flex-row gap-4 pt-6 border-t border-gray-700 mt-6">
       <style>
-        /* 登録ボタンのホバー・アクティブスタイル */
+        /* 登録・更新ボタンのホバー・アクティブスタイル */
+        #submit-button {
+          background-color: #ffffff !important;
+        }
         #submit-button:hover {
           background-color: #e5e7eb !important; /* gray-200 */
         }
         #submit-button:active {
           background-color: #d1d5db !important; /* gray-300 */
         }
+        #submit-button:hover:focus {
+          background-color: #e5e7eb !important; /* gray-200 */
+        }
       </style>
       
       <%# 登録・更新ボタン: 背景白、文字黒、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
       <%= f.submit @stock.new_record? ? "登録" : "更新", 
           id: "submit-button",
-          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none border-none", 
+          class: "w-full md:w-[calc(50%-0.5rem)] px-8 py-4 bg-white text-black border border-gray-300 font-bold text-xl rounded-lg transition-colors duration-200 flex items-center justify-center cursor-pointer appearance-none border-none submit-button-hover", 
           style: "background-color: #ffffff !important; color: #000000 !important; font-weight: 700 !important; font-size: 1.25rem !important; height: 56px !important; min-height: 56px !important; box-sizing: border-box !important;" %>
 
       <%# キャンセルボタン: 背景をより目立つグレーに変更（gray-600）、文字白、BOLD体、大きなフォントサイズ、高さ統一、幅50% %>
